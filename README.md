@@ -4,6 +4,8 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/dda63734ba3e85bf6ab0/maintainability)](https://codeclimate.com/github/temirKhan42/frontend-project-lvl4/maintainability)
 
+![Action Status](https://github.com/temirKhan42/frontend-project-lvl4/actions/workflows/node.js.yml/badge.svg)
+
 ### Application
 
 https://vast-river-17113.herokuapp.com/
