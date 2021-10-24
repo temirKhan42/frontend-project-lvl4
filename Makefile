@@ -1,3 +1,3 @@
 # Makefile
 lint:
-	npx eslint .
+	npx eslint ./src
