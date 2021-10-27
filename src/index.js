@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import startApp from './index.jsx';
-
-startApp();
-=======
 // @ts-check
 
 import 'core-js/stable/index.js';
@@ -34,4 +29,3 @@ const container = document.querySelector('#chat');
 container.append(card);
 
 console.log('it works!');
->>>>>>> Add server package

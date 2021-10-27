@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-# Makefile
-lint:
-	npx eslint ./src
-=======
 install: install-deps
 
 start:
@@ -33,4 +28,3 @@ test:
 	npm test -s
 
 .PHONY: test
->>>>>>> Add server package
