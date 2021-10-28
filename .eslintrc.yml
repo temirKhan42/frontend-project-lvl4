@@ -26,6 +26,7 @@ rules:
   import/extensions: 0
   react/prop-types: 0
   no-console: 0
+  no-underscore-dangle: [2, { 'allow': ['__filename', '__dirname'] }]
   functional/no-conditional-statement: 0
   functional/no-expression-statement: 0
   functional/immutable-data: 0
