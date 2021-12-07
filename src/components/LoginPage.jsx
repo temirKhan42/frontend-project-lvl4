@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios';
 import { useFormik } from 'formik';
-import { useState, useEffect, useRef } from "react";
-import { Redirect, useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import routes from '../routes.js';
 import useAuth from "../hooks/index.jsx";

@@ -9,7 +9,7 @@ import authContext from '../context/index.jsx';
 import useAuth from '../hooks/index.jsx';
 
 import LoginPage from './LoginPage.jsx';
-import HomePage from './HomePage.jsx';
+import HomePage from './homepage/HomePage.jsx';
 import ErrorPage from './ErrorPage.jsx';
 
 const AuthProvider = ({ children }) => {
@@ -50,19 +50,16 @@ const PrivateRoute = ({ children, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={({ location }) => {
-        console.log(location);
-        return (auth.loggedIn ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location },
-            }}
-          />
-        ));
-      }}
+      render={({ location }) => (auth.loggedIn ? (
+        children
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { from: location },
+          }}
+        />
+      ))}
     />
   );
 };
