@@ -116,7 +116,6 @@ const ChannelList = () => {
     dispatch(fetchChannels());
   }, []);
 
-  console.log(channels, currentChannelId);
   return (
     <ul className="nav flex-column nav-pills nav-fill px-2">
       {channels.map(({ id, name, removable }) => {

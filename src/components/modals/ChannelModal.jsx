@@ -13,18 +13,21 @@ const uniqueId = () => {
   return id;
 };
 
-const schema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, 'От 3 до 20 символов')
-    .max(20, 'От 3 до 20 символов')
-    .required('Обязательное поле'),
-});
-
 const AddingForm = ({ handleHide }) => {
+  const channels = useSelector((state) => state.channel.channels);
   const dispatch = useDispatch();
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
+  }, []);
+
+  const channelsNames = channels.map(({ name }) => name);
+  const schema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, 'От 3 до 20 символов')
+      .max(20, 'От 3 до 20 символов')
+      .required('Обязательное поле')
+      .test('is-uniq', 'Должно быть уникальным', (value, context) => !channelsNames.includes(value)),
   });
 
   return (
@@ -76,15 +79,23 @@ const AddingForm = ({ handleHide }) => {
 };
 
 const RenamingForm = ({ handleHide, channelId }) => {
+  const channels = useSelector((state) => state.channel.channels);
   const dispatch = useDispatch();
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
-  });
+  }, []);
 
-  const channels = useSelector((state) => state.channel.channels);
   const [{ name }] = channels.filter(({ id }) => id === channelId);
-  console.log(name);
+
+  const channelsNames = channels.map(({ name }) => name);
+  const schema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, 'От 3 до 20 символов')
+      .max(20, 'От 3 до 20 символов')
+      .required('Обязательное поле')
+      .test('is-uniq', 'Должно быть уникальным', (value, context) => !channelsNames.includes(value)),
+  });
 
   return (
     <Formik

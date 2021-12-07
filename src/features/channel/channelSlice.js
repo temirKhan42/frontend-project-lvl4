@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import fetchData from '../../js/fetchData.js';
+import _ from 'lodash';
 
 const initialState = {
   channels: [],         // [{ id: 1, name: '', removable: true }, {}, {}]
   currentChannelId: 1,
-  messages: [],         // [{ channelId: 1, id: 1, userName: '', text: '' }, {}, {}]
+  messages: [],         // [{ channelId: 1, id: 1, userName: '', body: '' }, {}, {}]
 };
 
 export const fetchChannels = createAsyncThunk(
@@ -46,6 +47,16 @@ export const channelSlice = createSlice({
       }
       state.channels = state.channels.filter(({ id }) => id !== removingId);
     },
+    addMessage: (state, action) => {
+      const { username } = JSON.parse(localStorage.getItem('userId'));
+      const newMessage = {
+        channelId: state.currentChannelId,
+        id: _.uniqueId(),
+        username,
+        ...action.payload,
+      }
+      state.messages.push(newMessage);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchChannels.fulfilled, (state, action) => {
@@ -62,6 +73,7 @@ export const {
   addChannel, 
   renameChannel, 
   removeChannel,
+  addMessage,
 } = channelSlice.actions;
 
 export default channelSlice.reducer;
