@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import fetchData from '../../js/fetchData.js';
 import _ from 'lodash';
 
+const defaultChannelId = 1;
+
 const initialState = {
   channels: [],         // [{ id: 1, name: '', removable: true }, {}, {}]
   currentChannelId: 1,
@@ -41,9 +43,10 @@ export const channelSlice = createSlice({
     removeChannel: (state, action) => {
       const removingId = action.payload;
       if (removingId === state.currentChannelId) {
-        state.currentChannelId = 1;
+        state.currentChannelId = defaultChannelId;
       }
       state.channels = state.channels.filter(({ id }) => id !== removingId);
+      state.messages = state.messages.filter(({ channelId }) => channelId !== removingId);
     },
     addMessage: (state, action) => {
       state.messages.push(action.payload);
