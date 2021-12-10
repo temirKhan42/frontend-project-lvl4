@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { io } from 'socket.io-client';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,6 +12,14 @@ import useAuth from '../hooks/index.jsx';
 import LoginPage from './LoginPage.jsx';
 import HomePage from './homepage/HomePage.jsx';
 import ErrorPage from './ErrorPage.jsx';
+
+import { useDispatch } from "react-redux";
+import {
+  addChannel,
+  removeChannel,
+  renameChannel,
+  addMessage,
+} from "../features/channel/channelSlice.js";
 
 const AuthProvider = ({ children }) => {
   const userId = localStorage.getItem('userId');
@@ -65,6 +74,25 @@ const PrivateRoute = ({ children, ...rest }) => {
 };
 
 export default function App() {
+  const dispatch = useDispatch();
+  const socket = io();
+
+  socket.on('newMessage', (newMessage) => {
+    dispatch(addMessage(newMessage));
+  });
+
+  socket.on('newChannel', (channelWithId) => {
+    dispatch(addChannel(channelWithId));
+  });
+
+  socket.on('removeChannel', ({ id }) => {
+    dispatch(removeChannel(id));
+  });
+
+  socket.on('renameChannel', (newChannel) => {
+    dispatch(renameChannel(newChannel));
+  });
+
   return (
     <AuthProvider>
       <Router>

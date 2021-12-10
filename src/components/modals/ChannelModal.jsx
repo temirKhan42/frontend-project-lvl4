@@ -1,26 +1,19 @@
+import { io } from "socket.io-client";
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { addChannel, renameChannel, removeChannel } from '../../features/channel/channelSlice.js';
+import { useSelector } from "react-redux";
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
 import _ from 'lodash';
 
-let i = 3;
-const uniqueId = () => {
-  const id = i;
-  i += 1;
-  return id;
-};
+const socket = io();
 
 const AddingForm = ({ handleHide }) => {
   const channels = useSelector((state) => state.channel.channels);
-  const dispatch = useDispatch();
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
   }, []);
-
   const channelsNames = channels.map(({ name }) => name);
   const schema = Yup.object().shape({
     name: Yup.string()
@@ -36,9 +29,7 @@ const AddingForm = ({ handleHide }) => {
       validationSchema={schema}
       onSubmit={(values) => {
         handleHide();
-        const id = uniqueId();
-        const newChannel = { ...values, id, removable: true };
-        dispatch(addChannel(newChannel));
+        socket.emit('newChannel', values);
       }}
     >
       {({
@@ -80,7 +71,6 @@ const AddingForm = ({ handleHide }) => {
 
 const RenamingForm = ({ handleHide, channelId }) => {
   const channels = useSelector((state) => state.channel.channels);
-  const dispatch = useDispatch();
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
@@ -94,7 +84,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
       .min(3, 'От 3 до 20 символов')
       .max(20, 'От 3 до 20 символов')
       .required('Обязательное поле')
-      .test('is-uniq', 'Должно быть уникальным', (value, context) => !channelsNames.includes(value)),
+      .test('is-uniq', 'Должно быть уникальным', (name, context) => !channelsNames.includes(name)),
   });
 
   return (
@@ -103,8 +93,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
       validationSchema={schema}
       onSubmit={(values) => {
         handleHide();
-        const newChannel = { id: channelId, removable: true, ...values };
-        dispatch(renameChannel(newChannel));
+        socket.emit('renameChannel', { id: channelId, ...values });
       }}
     >
       {({
@@ -145,11 +134,9 @@ const RenamingForm = ({ handleHide, channelId }) => {
 };
 
 const RemovingForm = ({ handleHide, channelId }) => {
-  const dispatch = useDispatch();
-
   const handleRemove = () => {
     handleHide();
-    dispatch(removeChannel(channelId));
+    socket.emit('removeChannel', { id: channelId });
   };
 
   return (

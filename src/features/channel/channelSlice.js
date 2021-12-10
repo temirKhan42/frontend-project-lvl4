@@ -26,13 +26,11 @@ export const channelSlice = createSlice({
       state.currentChannelId = action.payload;
     },
     addChannel: (state, action) => {
-      console.log(action.payload);
       state.channels.push(action.payload);
       state.currentChannelId = action.payload.id;
     },
     renameChannel: (state, action) => {
       const newChannel = action.payload;
-      console.log(action.payload);
       state.channels = state.channels.map((channel) => {
         if (channel.id === newChannel.id) {
           return newChannel;
@@ -48,19 +46,11 @@ export const channelSlice = createSlice({
       state.channels = state.channels.filter(({ id }) => id !== removingId);
     },
     addMessage: (state, action) => {
-      const { username } = JSON.parse(localStorage.getItem('userId'));
-      const newMessage = {
-        channelId: state.currentChannelId,
-        id: _.uniqueId(),
-        username,
-        ...action.payload,
-      }
-      state.messages.push(newMessage);
+      state.messages.push(action.payload);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchChannels.fulfilled, (state, action) => {
-      console.log(state, action);
       state.channels = action.payload.channels;
       state.currentChannelId = action.payload.currentChannelId;
       state.messages = action.payload.messages;

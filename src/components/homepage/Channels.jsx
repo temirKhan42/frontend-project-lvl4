@@ -65,10 +65,10 @@ const RemovableChannel = ({ name, id, btnClasses, btnSecondary }) => {
           />
 
           <Dropdown.Menu>
-            <Dropdown.Item onClick={handleShowRemoving} href="#/action-1">
+            <Dropdown.Item onClick={handleShowRemoving} href="#">
               Удалить
             </Dropdown.Item>
-            <Dropdown.Item onClick={handleShowRenaming} href="#/action-2">
+            <Dropdown.Item onClick={handleShowRenaming} href="#">
               Переименовать
             </Dropdown.Item>
           </Dropdown.Menu>
@@ -133,7 +133,12 @@ const ChannelList = () => {
             btnClasses={btnClasses}
             btnSecondary={btnSecondary}
           /> :
-          <UnremovableChannel key={`${id}-${name}`} name={name} id={id} btnClasses={btnClasses} />
+          <UnremovableChannel
+            key={`${id}-${name}`}
+            name={name}
+            id={id}
+            btnClasses={btnClasses}
+          />
         );
       })}
     </ul>
