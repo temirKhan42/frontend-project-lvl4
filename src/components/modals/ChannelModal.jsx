@@ -37,6 +37,7 @@ const AddingForm = ({ handleHide }) => {
         handleChange,
         values,
         errors,
+        isSubmitting,
       }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group className="form-group">
@@ -50,15 +51,16 @@ const AddingForm = ({ handleHide }) => {
               className="mb-2"
               isInvalid={!!errors.name}
               ref={inputRef}
+              disabled={isSubmitting}
             ></Form.Control>
             <Form.Control.Feedback type="invalid">
               {errors.name}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-              <Button type="button" onClick={handleHide} variant="secondary" className="me-2">
+              <Button type="button" onClick={handleHide} disabled={isSubmitting} variant="secondary" className="me-2">
                 Отмениить
               </Button>
-              <Button type="submit" variant="primary" className="me-2">
+              <Button type="submit" disabled={isSubmitting} variant="primary" className="me-2">
                 Отправить
               </Button>
             </div>
@@ -101,6 +103,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
         handleChange,
         values,
         errors,
+        isSubmitting,
       }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group className="form-group">
@@ -114,15 +117,16 @@ const RenamingForm = ({ handleHide, channelId }) => {
               className="mb-2"
               isInvalid={!!errors.name}
               ref={inputRef}
+              disabled={isSubmitting}
             ></Form.Control>
             <Form.Control.Feedback type="invalid">
               {errors.name}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-              <Button type="button" onClick={handleHide} variant="secondary" className="me-2">
+              <Button type="button" onClick={handleHide} disabled={isSubmitting} variant="secondary" className="me-2">
                 Отмениить
               </Button>
-              <Button type="submit" variant="primary" className="me-2">
+              <Button type="submit" disabled={isSubmitting} variant="primary" className="me-2">
                 Отправить
               </Button>
             </div>
