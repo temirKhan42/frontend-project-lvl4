@@ -9,8 +9,8 @@ import loginImage from "../../assets/login-image.js";
 
 const LoginForm = () => {
   const history = useHistory();
-  const inputRef = useRef();
   const auth = useAuth();
+  const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
   }, []);

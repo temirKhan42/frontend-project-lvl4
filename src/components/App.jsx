@@ -12,6 +12,7 @@ import useAuth from '../hooks/index.jsx';
 import LoginPage from './LoginPage.jsx';
 import HomePage from './homepage/HomePage.jsx';
 import ErrorPage from './ErrorPage.jsx';
+import SignupPage from './SignupPage.jsx';
 
 import { useDispatch } from "react-redux";
 import {
@@ -104,6 +105,9 @@ export default function App() {
             </PrivateRoute>
             <Route path="/login">
               <LoginPage />
+            </Route>
+            <Route path="/signup">
+              <SignupPage />
             </Route>
             <Route path="*">
               <ErrorPage />
