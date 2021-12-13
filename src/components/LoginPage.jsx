@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios';
+import { useTranslation } from "react-i18next";
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
@@ -8,6 +9,7 @@ import useAuth from "../hooks/index.jsx";
 import loginImage from "../../assets/login-image.js";
 
 const LoginForm = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const auth = useAuth();
   const inputRef = useRef();
@@ -24,7 +26,7 @@ const LoginForm = () => {
         setAuthFailed(false);
         localStorage.setItem('userId', JSON.stringify(data));
         auth.logIn();
-        history.push('/');
+        history.push('/')
       } catch (err) {
         setAuthFailed(true);
         console.log(err);
@@ -33,17 +35,18 @@ const LoginForm = () => {
   });
   return (
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-      <h1 className="text-center mb-4">Войти</h1>
+      <h1 className="text-center mb-4">{t('loginPage.form header')}</h1>
       <Form.Group>
-        <FloatingLabel className="mb-3" label="Ваш ник">
+        <FloatingLabel className="mb-3" label={t('loginPage.label username')}>
           <Form.Control
             id="username"
             name="username"
             type="text"
             autoComplete="username"
             className="form-control"
-            placeholder="Ваш ник"
+            placeholder={t('loginPage.label username')}
             required
+            disabled={formik.isSubmitting}
             ref={inputRef}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -53,13 +56,13 @@ const LoginForm = () => {
         </FloatingLabel>
       </Form.Group>
       <Form.Group>
-        <FloatingLabel className="mb-4" label="Пароль">
+        <FloatingLabel className="mb-4" label={t('loginPage.label password')}>
           <Form.Control
             id="password"
             name="password"
             type="password"
             autoComplete="current-password"
-            placeholder="Пароль"
+            placeholder={t('loginPage.label password')}
             className="form-control"
             required
             onChange={formik.handleChange}
@@ -68,32 +71,45 @@ const LoginForm = () => {
             isInvalid={authFailed}
           />
           <Form.Control.Feedback type="invalid" tooltip>
-            Неверные имя пользователя или пароль
+            {t('error messages.authorization failed')}
           </Form.Control.Feedback>
         </FloatingLabel>
       </Form.Group>
-      <Button as="input" className="w-100 mb-3 btn" variant="outline-primary" type="submit" value="Войти" />
+      <Button
+        disabled={formik.isSubmitting}
+        as="input"
+        className="w-100 mb-3 btn"
+        variant="outline-primary"
+        type="submit"
+        value={t('loginPage.submit button')}
+      />
     </Form>
   );
 };
 
-const CardBody = ({ children }) => (
-  <div className="card-body row p-5">
-    <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-      <img src={loginImage} className="rounded-circle" alt="Войти" />
+const CardBody = ({ children }) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'loginPage' });
+  return (
+    <div className="card-body row p-5">
+      <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+        <img src={loginImage} className="rounded-circle" alt={t('image alt')} />
+      </div>
+      {children}
     </div>
-    {children}
-  </div>
-);
+  );
+}
 
-const Footer = () => (
-  <div className="card-footer p-4">
-    <div className="text-center">
-      <span>Нет акаунта?</span>
-      <a href="/signup"> Регистрация</a>
+const Footer = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'loginPage' });
+  return (
+    <div className="card-footer p-4">
+      <div className="text-center">
+        <span>{t('acaunt question')}</span>
+        <a href="/signup"> {t('signup')}</a>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const LoginPage = () => {
   return (

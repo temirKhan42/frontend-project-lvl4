@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from "react-redux";
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -9,6 +10,7 @@ import _ from 'lodash';
 const socket = io();
 
 const AddingForm = ({ handleHide }) => {
+  const { t } = useTranslation();
   const channels = useSelector((state) => state.channel.channels);
   const inputRef = useRef();
   useEffect(() => {
@@ -17,10 +19,10 @@ const AddingForm = ({ handleHide }) => {
   const channelsNames = channels.map(({ name }) => name);
   const schema = Yup.object().shape({
     name: Yup.string()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .required('Обязательное поле')
-      .test('is-uniq', 'Должно быть уникальным', (value, context) => !channelsNames.includes(value)),
+      .min(3, t('error messages.symbols ammount'))
+      .max(20, t('error messages.symbols ammount'))
+      .required(t('error messages.required'))
+      .test('is-uniq', t('error messages.uniq name'), (value) => !channelsNames.includes(value)),
   });
 
   return (
@@ -41,7 +43,9 @@ const AddingForm = ({ handleHide }) => {
       }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group className="form-group">
-            <Form.Label visuallyHidden htmlFor="name">Имя канала</Form.Label>
+            <Form.Label visuallyHidden htmlFor="name">
+              {t('homePage.modals.channel name label')}
+            </Form.Label>
             <Form.Control
               type="text"
               name="name"
@@ -58,10 +62,10 @@ const AddingForm = ({ handleHide }) => {
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
               <Button type="button" onClick={handleHide} disabled={isSubmitting} variant="secondary" className="me-2">
-                Отмениить
+                {t('homePage.modals.cancel button')}
               </Button>
               <Button type="submit" disabled={isSubmitting} variant="primary" className="me-2">
-                Отправить
+                {t('homePage.modals.confirm button')}
               </Button>
             </div>
           </Form.Group>
@@ -72,6 +76,7 @@ const AddingForm = ({ handleHide }) => {
 };
 
 const RenamingForm = ({ handleHide, channelId }) => {
+  const { t } = useTranslation();
   const channels = useSelector((state) => state.channel.channels);
   const inputRef = useRef();
   useEffect(() => {
@@ -83,10 +88,10 @@ const RenamingForm = ({ handleHide, channelId }) => {
   const channelsNames = channels.map(({ name }) => name);
   const schema = Yup.object().shape({
     name: Yup.string()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .required('Обязательное поле')
-      .test('is-uniq', 'Должно быть уникальным', (name, context) => !channelsNames.includes(name)),
+      .min(3, t('error messages.symbols ammount'))
+      .max(20, t('error messages.symbols ammount'))
+      .required(t('error messages.required'))
+      .test('is-uniq', t('error messages.uniq name'), (name) => !channelsNames.includes(name)),
   });
 
   return (
@@ -107,7 +112,9 @@ const RenamingForm = ({ handleHide, channelId }) => {
       }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group className="form-group">
-            <Form.Label visuallyHidden htmlFor="name">Имя канала</Form.Label>
+            <Form.Label visuallyHidden htmlFor="name">
+              {t('homePage.modals.channel name label')}
+            </Form.Label>
             <Form.Control
               type="text"
               name="name"
@@ -124,10 +131,10 @@ const RenamingForm = ({ handleHide, channelId }) => {
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
               <Button type="button" onClick={handleHide} disabled={isSubmitting} variant="secondary" className="me-2">
-                Отмениить
+                {t('homePage.modals.cancel button')}
               </Button>
               <Button type="submit" disabled={isSubmitting} variant="primary" className="me-2">
-                Отправить
+                {t('homePage.modals.confirm button')}
               </Button>
             </div>
           </Form.Group>
@@ -138,6 +145,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
 };
 
 const RemovingForm = ({ handleHide, channelId }) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'homePage.modals' })
   const handleRemove = () => {
     handleHide();
     socket.emit('removeChannel', { id: channelId });
@@ -145,13 +153,13 @@ const RemovingForm = ({ handleHide, channelId }) => {
 
   return (
     <>
-      <p className="lead">Уверены?</p>
+      <p className="lead">{t('confidence question')}</p>
       <div className="d-flex justify-content-end">
         <Button type="button" onClick={handleHide} variant="secondary" className="me-2">
-          Отмениить
+          {t('cancel button')}
         </Button>
         <Button type="button" onClick={handleRemove} variant="danger" className="me-2">
-          Удалить
+          {t('remove channel button')}
         </Button>
       </div>
     </>
@@ -159,20 +167,21 @@ const RemovingForm = ({ handleHide, channelId }) => {
 };
 
 const getModal = (modalName, handleHide, channelId) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'homePage.modals' })
   switch (modalName) {
     case 'add':
       return {
-        title: 'Добавить канал',
+        title: t('add channel header'),
         modal: <AddingForm handleHide={handleHide} />,
       };
     case 'rename':
       return {
-        title: 'Переименовать канал',
+        title: t('rename channel header'),
         modal: <RenamingForm handleHide={handleHide} channelId={channelId} />
       };
     case 'remove':
       return {
-        title: 'Удалить канал',
+        title: t('remove channel header'),
         modal: <RemovingForm handleHide={handleHide} channelId={channelId} />,
       };
     default:

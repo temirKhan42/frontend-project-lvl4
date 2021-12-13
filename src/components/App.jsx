@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { io } from 'socket.io-client';
+import { useTranslation } from "react-i18next";
 import {
   BrowserRouter as Router,
   Route,
@@ -42,13 +43,20 @@ const AuthProvider = ({ children }) => {
 };
 
 const Nav = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
         <a className="navbar-brand" href="/">Hexlet Chat</a>
         {auth.loggedIn ? (
-          <button type="button" onClick={auth.logOut} className="btn btn-primary">Выйти</button>
+          <button
+            type="button"
+            onClick={auth.logOut}
+            className="btn btn-primary"
+          >
+            {t('navbar.logout')}
+          </button>
         ) : ''}
       </div>
     </nav>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import image from '../../assets/signup-image.js';
 import * as Yup from 'yup';
 import { Formik, useFormik } from 'formik';
@@ -9,6 +10,7 @@ import useAuth from '../hooks/index.jsx';
 import { useHistory } from "react-router-dom";
 
 const SignupForm = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const history = useHistory();
   const inputRef = useRef();
@@ -20,15 +22,15 @@ const SignupForm = () => {
 
   const schema = Yup.object().shape({
     username: Yup.string()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .required('Обязательное поле'),
+      .min(3, t('error messages.symbols ammount'))
+      .max(20, t('error messages.symbols ammount'))
+      .required(t('error messages.required')),
     password: Yup.string()
-      .required('Обязательное поле')
-      .min(6, 'Не менее 6 символов'),
+      .required(t('error messages.required'))
+      .min(6, t('error messages.password symbols ammount')),
     confirmPassword: Yup.string()
-      .required('Обязательное поле')
-      .test('is-match', 'Пароли должны совпадать', (val, { parent }) => val === parent.password),
+      .required(t('error messages.required'))
+      .test('is-match', t('error messages.confirm password'), (val, { parent }) => val === parent.password),
   });
 
   const initialValues = {
@@ -71,14 +73,14 @@ const SignupForm = () => {
       }) => {
         return (
           <Form noValidate className="w-50" onSubmit={handleSubmit}>
-            <h1 className="text-center mb-4">Регистрация</h1>
-            <FloatingLabel label="Имя пользователя" className="mb-3 form-group">
+            <h1 className="text-center mb-4">{t('signupPage.form header')}</h1>
+            <FloatingLabel label={t('signupPage.username label')} className="mb-3 form-group">
               <Form.Control
                 type="text"
                 id="username"
                 name="username"
                 autoComplete="username"
-                placeholder="От 3 до 20 символов"
+                placeholder={t('error messages.symbols ammount')}
                 value={values.username}
                 onChange={customHandleChange(handleChange)}
                 isInvalid={!!errors.username || authUniqFailed}
@@ -90,13 +92,13 @@ const SignupForm = () => {
                 {errors.username}
               </Form.Control.Feedback>
             </FloatingLabel>
-            <FloatingLabel label="Пароль" className="mb-3 form-group">
+            <FloatingLabel label={t('signupPage.password label')} className="mb-3 form-group">
               <Form.Control
                 type="password"
                 id="password"
                 name="password"
                 autoComplete="new-password"
-                placeholder="Не менее 6 символов"
+                placeholder={t('error messages.password symbols ammount')}
                 value={values.password}
                 onChange={customHandleChange(handleChange)}
                 isInvalid={!!errors.password || authUniqFailed}
@@ -108,13 +110,13 @@ const SignupForm = () => {
                 {errors.password}
               </Form.Control.Feedback>
             </FloatingLabel>
-            <FloatingLabel label="Подтвердить пароль" className="mb-4 form-group">
+            <FloatingLabel label={t('signupPage.confirm password label')} className="mb-4 form-group">
               <Form.Control
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
                 autoComplete="new-password"
-                placeholder="Пароли должны совпадать"
+                placeholder={t('error messages.confirm password')}
                 value={values.confirmPassword}
                 onChange={customHandleChange(handleChange)}
                 isInvalid={!!errors.confirmPassword || authUniqFailed}
@@ -122,7 +124,7 @@ const SignupForm = () => {
                 required
               />
               <Form.Control.Feedback type="invalid" tooltip>
-                {authUniqFailed ? 'Такой пользователь уже существует' : errors.confirmPassword}
+                {authUniqFailed ? t('error messages.user exist') : errors.confirmPassword}
               </Form.Control.Feedback>
             </FloatingLabel>
             <Button
@@ -131,7 +133,7 @@ const SignupForm = () => {
               variant="outline-primary"
               className="w-100"
             >
-              Зарегистрироваться
+              {t('signupPage.submit button')}
             </Button>
           </Form>
         )
@@ -141,9 +143,10 @@ const SignupForm = () => {
 };
 
 const SignupImage = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'signupPage' })
   return (
     <div>
-      <img src={image} className="rounded-circle" alt="Регистрация" />
+      <img src={image} className="rounded-circle" alt={t('image alt')} />
     </div>
   );
 };
@@ -166,89 +169,3 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
-
-  // const formik = useFormik({
-  //   initialValues,
-  //   onSubmit: async (values, { resetForm }) => {
-  //     try {
-  //       const { data } = await axios.post(routes.signupPath(), values);
-  //       setAuthUniqFailed(false);
-  //       localStorage.setItem('userId', JSON.stringify(data));
-  //       auth.logIn();
-  //       resetForm({ values: '' });
-  //       history.push('/');
-  //     } catch (err) {
-  //       if (err.message === 'Request failed with status code 409') {
-  //         setAuthUniqFailed(true);
-  //         console.log(err);
-  //       }
-  //     }
-  //   },
-  // });
-
-  // return (
-  //   <Form noValidate className="w-50" onSubmit={formik.handleSubmit}>
-  //     <h1 className="text-center mb-4">Регистрация</h1>
-  //     <FloatingLabel label="Имя пользователя" className="mb-3 form-group">
-  //       <Form.Control
-  //         type="text"
-  //         id="username"
-  //         name="username"
-  //         autoComplete="username"
-  //         placeholder="От 3 до 20 символов"
-  //         value={formik.values.username}
-  //         onChange={formik.handleChange}
-  //         isInvalid={!!formik.errors.username}
-  //         disabled={formik.isSubmitting}
-  //         ref={inputRef}
-  //         required
-  //       />
-  //       <Form.Control.Feedback type="invalid" tooltip>
-  //         {formik.errors.username}
-  //       </Form.Control.Feedback>
-  //     </FloatingLabel>
-  //     <FloatingLabel label="Пароль" className="mb-3 form-group">
-  //       <Form.Control
-  //         type="password"
-  //         id="password"
-  //         name="password"
-  //         autoComplete="new-password"
-  //         placeholder="Не менее 6 символов"
-  //         value={formik.values.password}
-  //         onChange={formik.handleChange}
-  //         isInvalid={!!formik.errors.password}
-  //         disabled={formik.isSubmitting}
-  //         required
-  //         aria-describedby="passwordHelpBlock"
-  //       />
-  //       <Form.Control.Feedback type="invalid" tooltip>
-  //         {formik.errors.password}
-  //       </Form.Control.Feedback>
-  //     </FloatingLabel>
-  //     <FloatingLabel label="Подтвердить пароль" className="mb-4 form-group">
-  //       <Form.Control
-  //         type="password"
-  //         id="confirmPassword"
-  //         name="confirmPassword"
-  //         autoComplete="new-password"
-  //         placeholder="Пароли должны совпадать"
-  //         value={formik.values.confirmPassword}
-  //         onChange={formik.handleChange}
-  //         isInvalid={!!formik.errors.confirmPassword}
-  //         disabled={formik.isSubmitting}
-  //         required
-  //       />
-  //       <Form.Control.Feedback type="invalid" tooltip>
-  //         {formik.errors.confirmPassword}
-  //       </Form.Control.Feedback>
-  //     </FloatingLabel>
-  //     <Button
-  //       type="submit"
-  //       disabled={formik.isSubmitting}
-  //       variant="outline-primary"
-  //       className="w-100"
-  //     >
-  //       Зарегистрироваться
-  //     </Button>
-  //   </Form>
-  // );

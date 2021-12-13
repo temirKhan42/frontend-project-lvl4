@@ -1,0 +1,52 @@
+export default {
+  translation: {
+    navbar: {
+      logout: 'Выйти',
+    },
+    loginPage: {
+      'form header': 'Войти',
+      'label username': 'Ваш ник',
+      'label password': 'Пароль',
+      'submit button': 'Войти',
+      'image alt': 'Войти',
+      'acaunt question': 'Нет акаунта?',
+      'signup': 'Регистрация',
+    },
+    signupPage: {
+      'form header': 'Регистрация',
+      'username label': 'Имя пользователя',
+      'password label': 'Пароль',
+      'confirm password label': 'Подтвердить пароль',
+      'submit button': 'Зарегистрироваться',
+      'image alt': 'Регистрация',
+    },
+    'error messages': {
+      'authorization failed': 'Неверные имя пользователя или пароль',
+      'symbols ammount': 'От 3 до 20 символов',
+      'required': 'Обязательное поле',
+      'password symbols ammount': 'Не менее 6 символов',
+      'confirm password': 'Пароли должны совпадать',
+      'user exist': 'Такой пользователь уже существует',
+      'uniq name': 'Должно быть уникальным',
+    },
+    homePage: {
+      'channel list': 'Каналы',
+      'removing channel modal button': 'Удалить',
+      'renaming channel modal button': 'Переименовать',
+      'text message label': 'Новое сообщение',
+      'text message placeholder': 'Введите сообщение...',
+      'send message button': 'Отправить',
+      'message count': 'сообщений',
+      'modals': {
+        'add channel header': 'Добавить канал',
+        'remove channel header': 'Удалить канал',
+        'rename channel header': 'Переименовать канал',
+        'channel name label': 'Имя канала',
+        'cancel button': 'Отменить',
+        'confirm button': 'Отправить',
+        'confidence question': 'Уверены?',
+        'remove channel button': 'Удалить',
+      },
+    },
+  },
+};

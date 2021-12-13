@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { setCurrentChannel } from '../../features/channel/channelSlice.js';
 import { fetchChannels } from '../../features/channel/channelSlice.js';
 import classNames from 'classnames';
@@ -7,6 +8,7 @@ import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import ChannelModal from '../modals/ChannelModal.jsx';
 
 const AddChannel = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'homePage' });
   const [showAddChannel, setShowAddChannel] = useState(false);
 
   const handleShow = () => setShowAddChannel(true);
@@ -15,7 +17,7 @@ const AddChannel = () => {
   return (
     <>
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-        <span>Каналы</span>
+        <span>{t('channel list')}</span>
         <button onClick={handleShow} type="button" className="p-0 text-primary btn btn-group-vertical">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
@@ -31,6 +33,7 @@ const AddChannel = () => {
 };
 
 const RemovableChannel = ({ name, id, btnClasses, btnSecondary }) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'homePage' });
   const dropdownBtnClasses = classNames('flex-grow-0 dropdown-toggle dropdown-toggle-split btn', {
     ...btnSecondary,
   });
@@ -66,10 +69,10 @@ const RemovableChannel = ({ name, id, btnClasses, btnSecondary }) => {
 
           <Dropdown.Menu>
             <Dropdown.Item onClick={handleShowRemoving} href="#">
-              Удалить
+              {t('removing channel modal button')}
             </Dropdown.Item>
             <Dropdown.Item onClick={handleShowRenaming} href="#">
-              Переименовать
+              {t('renaming channel modal button')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
