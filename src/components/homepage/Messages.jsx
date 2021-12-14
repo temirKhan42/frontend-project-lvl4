@@ -105,7 +105,7 @@ const MessageForm = () => {
 };
 
 const Messages = () => {
-  const { t } = useTranslation('translation', { keyPrefix: 'homePage' });
+  const { t } = useTranslation('translation', { keyPrefix: 'homePage.message count' });
   const { channels, currentChannelId, messages } = useSelector((state) => state.channel);
 
   const [{ name: channelName }] = channels.length === 0
@@ -127,7 +127,7 @@ const Messages = () => {
             <b># {channelName}</b>
           </p>
           <span className="text-muted">
-            {`${messageNum} ${t('message count')}`}
+            {t('key', { count: messageNum })}
           </span>
         </div>
         <MessageBox />

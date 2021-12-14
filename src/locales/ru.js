@@ -36,7 +36,13 @@ export default {
       'text message label': 'Новое сообщение',
       'text message placeholder': 'Введите сообщение...',
       'send message button': 'Отправить',
-      'message count': 'сообщений',
+      'message count': {
+        key_zero: '{{count}} сообщений',
+        key_one: '{{count}} сообщение',
+        key_few: '{{count}} сообщения',
+        key_many: '{{count}} сообщений',
+        key_other: '{{count}} сообщений',
+      },
       'modals': {
         'add channel header': 'Добавить канал',
         'remove channel header': 'Удалить канал',
