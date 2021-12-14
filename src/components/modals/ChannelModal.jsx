@@ -5,18 +5,25 @@ import { useSelector } from "react-redux";
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import _ from 'lodash';
 
 const socket = io();
 
 const AddingForm = ({ handleHide }) => {
   const { t } = useTranslation();
+
+  const notify = () => toast.success(t('notes.channel created'));
+
   const channels = useSelector((state) => state.channel.channels);
+
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
   }, []);
+
   const channelsNames = channels.map(({ name }) => name);
+
   const schema = Yup.object().shape({
     name: Yup.string()
       .min(3, t('error messages.symbols ammount'))
@@ -32,6 +39,7 @@ const AddingForm = ({ handleHide }) => {
       onSubmit={(values) => {
         handleHide();
         socket.emit('newChannel', values);
+        notify();
       }}
     >
       {({
@@ -77,7 +85,11 @@ const AddingForm = ({ handleHide }) => {
 
 const RenamingForm = ({ handleHide, channelId }) => {
   const { t } = useTranslation();
+
+  const notify = () => toast.success(t('notes.channel renamed'));
+
   const channels = useSelector((state) => state.channel.channels);
+
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
@@ -101,6 +113,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
       onSubmit={(values) => {
         handleHide();
         socket.emit('renameChannel', { id: channelId, ...values });
+        notify();
       }}
     >
       {({
@@ -145,21 +158,25 @@ const RenamingForm = ({ handleHide, channelId }) => {
 };
 
 const RemovingForm = ({ handleHide, channelId }) => {
-  const { t } = useTranslation('translation', { keyPrefix: 'homePage.modals' })
+  const { t } = useTranslation();
+
+  const notify = () => toast.success(t('notes.channel removed'));
+
   const handleRemove = () => {
     handleHide();
     socket.emit('removeChannel', { id: channelId });
+    notify();
   };
 
   return (
     <>
-      <p className="lead">{t('confidence question')}</p>
+      <p className="lead">{t('homePage.modals.confidence question')}</p>
       <div className="d-flex justify-content-end">
         <Button type="button" onClick={handleHide} variant="secondary" className="me-2">
-          {t('cancel button')}
+          {t('homePage.modals.cancel button')}
         </Button>
         <Button type="button" onClick={handleRemove} variant="danger" className="me-2">
-          {t('remove channel button')}
+          {t('homePage.modals.remove channel button')}
         </Button>
       </div>
     </>

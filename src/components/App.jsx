@@ -23,6 +23,8 @@ import {
   addMessage,
 } from "../features/channel/channelSlice.js";
 
+import { ToastContainer } from 'react-toastify';
+
 const AuthProvider = ({ children }) => {
   const userId = localStorage.getItem('userId');
   const [loggedIn, setLoggedIn] = useState(!!userId);
@@ -105,6 +107,7 @@ export default function App() {
   return (
     <AuthProvider>
       <Router>
+        <ToastContainer />
         <div className="d-flex flex-column h-100">
           <Nav />
           <Switch>

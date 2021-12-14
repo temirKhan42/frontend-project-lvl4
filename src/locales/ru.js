@@ -54,5 +54,10 @@ export default {
         'remove channel button': 'Удалить',
       },
     },
+    'notes': {
+      'channel created': 'Канал создан',
+      'channel renamed': 'Канал переименован',
+      'channel removed': 'Канал удален',
+    },
   },
 };
