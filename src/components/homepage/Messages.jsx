@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { Form, InputGroup, ButtonGroup } from 'react-bootstrap';
 import * as Yup from 'yup';
+import filter from 'leo-profanity';
 
 const socket = io();
 
@@ -32,6 +33,18 @@ const MessageBox = () => {
   );
 };
 
+const enFilter = (text) => {
+  filter.loadDictionary('en');
+  return filter.clean(text);
+};
+
+const ruFilter = (text) => {
+  filter.loadDictionary('ru');
+  return filter.clean(text);
+};
+
+const filterObsceneText = ({ text }) => ({ text: ruFilter(enFilter(text)) });
+
 const MessageForm = () => {
   const { t } = useTranslation();
   const { currentChannelId } = useSelector((state) => state.channel);
@@ -49,11 +62,13 @@ const MessageForm = () => {
       initialValues={{ text: '' }}
       validationShema={schema}
       onSubmit={(values, { resetForm }) => {
+        const { text } = filterObsceneText(values);
         const { username } = JSON.parse(localStorage.getItem('userId'));
+        console.log(text);
         const newMessage = {
           channelId: currentChannelId,
           username,
-          ...values,
+          text,
         }
         socket.emit('newMessage', newMessage);
         resetForm({ values: '' });
