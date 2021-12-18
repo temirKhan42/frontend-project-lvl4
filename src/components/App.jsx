@@ -7,6 +7,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { RollbarContext } from '@rollbar/react';
 import authContext from '../context/index.jsx';
 import useAuth from '../hooks/index.jsx';
 
@@ -114,10 +115,14 @@ export default function App() {
               <HomePage />
             </PrivateRoute>
             <Route path="/login">
-              <LoginPage />
+              <RollbarContext context="/login">
+                <LoginPage />
+              </RollbarContext>
             </Route>
             <Route path="/signup">
-              <SignupPage />
+              <RollbarContext context="/signup">
+                <SignupPage />
+              </RollbarContext>
             </Route>
             <Route path="*">
               <ErrorPage />
