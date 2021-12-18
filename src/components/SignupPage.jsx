@@ -10,6 +10,11 @@ import useAuth from '../hooks/index.jsx';
 import { useHistory } from "react-router-dom";
 import { useRollbar } from '@rollbar/react';
 
+const getData = async (option) => {
+  const { data } = await axios.post(routes.signupPath(), option);
+  return data;
+};
+
 const SignupForm = () => {
   const { t } = useTranslation();
 
@@ -56,7 +61,7 @@ const SignupForm = () => {
       validationSchema={schema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          const { data } = await axios.post(routes.signupPath(), values);
+          const data = await getData(values);
           setAuthUniqFailed(false);
           localStorage.setItem('userId', JSON.stringify(data));
           auth.logIn();

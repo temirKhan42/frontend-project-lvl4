@@ -10,12 +10,8 @@ import loginImage from "../../assets/login-image.js";
 import { useRollbar } from '@rollbar/react';
 
 const getData = async (option) => {
-  try {
-    const { data } = await axios.post(routes.loginPath(), option);
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const { data } = await axios.post(routes.loginPath(), option);
+  return data;
 };
 
 const LoginForm = () => {
@@ -44,6 +40,7 @@ const LoginForm = () => {
         history.push('/')
       } catch (err) {
         setAuthFailed(true);
+        console.err(err);
         rollbar.error('Unauthorized user', err);
       }
     },
