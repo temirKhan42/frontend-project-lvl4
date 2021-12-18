@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setCurrentChannel } from '../../features/channel/channelSlice.js';
-import { fetchChannels } from '../../features/channel/channelSlice.js';
+import { setCurrentChannel, fetchChannels } from '../../slices/chatSlice.js';
+import { useRollbar } from '@rollbar/react';
 import classNames from 'classnames';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import ChannelModal from '../modals/ChannelModal.jsx';
@@ -114,9 +114,15 @@ const UnremovableChannel = ({ name, id, btnClasses }) => {
 const ChannelList = () => {
   const { channels, currentChannelId } = useSelector((state) => state.channel);
   const dispatch = useDispatch();
+  const rollbar = useRollbar();
 
   useEffect(() => {
-    dispatch(fetchChannels());
+    try {
+      dispatch(fetchChannels());
+    } catch (err) {
+      console.error(err);
+      rollbar.error('Failed Fetch Channels', err);
+    };
   }, []);
 
   return (

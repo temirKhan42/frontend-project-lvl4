@@ -16,7 +16,7 @@ export default {
       'form header': 'Регистрация',
       'username label': 'Имя пользователя',
       'password label': 'Пароль',
-      'confirm password label': 'Подтвердить пароль',
+      'confirm password label': 'Подтвердите пароль',
       'submit button': 'Зарегистрироваться',
       'image alt': 'Регистрация',
     },

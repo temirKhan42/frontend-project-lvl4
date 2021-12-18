@@ -1,6 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import fetchData from '../../js/fetchData.js';
 import _ from 'lodash';
+import axios from 'axios';
+import routes from '../routes.js';
+
+const fetchData = async (token) => {
+  try {
+    const response = await axios({
+      method: 'get',
+      url: routes.dataPath(),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  } catch (err) {
+    console.error('Failed Fetch Data Request');
+  }
+};
 
 const defaultChannelId = 1;
 
@@ -20,7 +37,7 @@ export const fetchChannels = createAsyncThunk(
   }
 )
 
-export const channelSlice = createSlice({
+export const chatSlice = createSlice({
   name: 'channel',
   initialState,
   reducers: {
@@ -67,6 +84,6 @@ export const {
   renameChannel, 
   removeChannel,
   addMessage,
-} = channelSlice.actions;
+} = chatSlice.actions;
 
-export default channelSlice.reducer;
+export default chatSlice.reducer;

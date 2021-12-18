@@ -40,7 +40,7 @@ const LoginForm = () => {
         history.push('/')
       } catch (err) {
         setAuthFailed(true);
-        console.err(err);
+        console.error(err);
         rollbar.error('Unauthorized user', err);
       }
     },

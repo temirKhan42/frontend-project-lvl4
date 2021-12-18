@@ -21,7 +21,7 @@ import {
   removeChannel,
   renameChannel,
   addMessage,
-} from "../features/channel/channelSlice.js";
+} from "../slices/chatSlice.js";
 
 import { ToastContainer } from 'react-toastify';
 
