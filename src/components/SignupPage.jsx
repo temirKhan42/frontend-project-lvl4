@@ -8,11 +8,17 @@ import routes from '../routes.js';
 import axios from "axios";
 import useAuth from '../hooks/index.jsx';
 import { useHistory } from "react-router-dom";
+import { useRollbar } from '@rollbar/react';
 
 const SignupForm = () => {
   const { t } = useTranslation();
+
+  const rollbar = useRollbar();
+
   const auth = useAuth();
+
   const history = useHistory();
+
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
@@ -59,7 +65,8 @@ const SignupForm = () => {
         } catch (err) {
           if (err.message === 'Request failed with status code 409') {
             setAuthUniqFailed(true);
-            console.log(err);
+            console.error(err);
+            rollbar.error('Authentication failed', err);
           }
         }
       }}

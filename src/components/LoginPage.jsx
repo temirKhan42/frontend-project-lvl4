@@ -7,32 +7,49 @@ import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import routes from '../routes.js';
 import useAuth from "../hooks/index.jsx";
 import loginImage from "../../assets/login-image.js";
+import { useRollbar } from '@rollbar/react';
+
+const getData = async (option) => {
+  try {
+    const { data } = await axios.post(routes.loginPath(), option);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
 
 const LoginForm = () => {
+  const rollbar = useRollbar();
   const { t } = useTranslation();
+
   const history = useHistory();
+
   const auth = useAuth();
+
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
   }, []);
+
   const [authFailed, setAuthFailed] = useState(false);
 
   const formik = useFormik({
     initialValues: { username: '', password: '' },
     onSubmit: async (option) => {
       try {
-        const { data } = await axios.post(routes.loginPath(), option);
+        const data = await getData(option);
         setAuthFailed(false);
         localStorage.setItem('userId', JSON.stringify(data));
         auth.logIn();
         history.push('/')
       } catch (err) {
         setAuthFailed(true);
-        console.log(err);
+        console.error(rollbar);
+        rollbar.error('Unauthorized', err);
       }
     },
   });
+
   return (
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
       <h1 className="text-center mb-4">{t('loginPage.form header')}</h1>

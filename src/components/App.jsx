@@ -36,7 +36,6 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('userId');
     setLoggedIn(false);
   };
-
   return (
     <authContext.Provider value={{ loggedIn, logIn, logOut }}>
       {children}

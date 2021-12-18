@@ -7,7 +7,7 @@ const i18nextInstance = i18n.createInstance();
 i18nextInstance
   .use(initReactI18next)
   .init({
-    debug: true,
+    debug: false,
     lng: 'ru',
     interpolation: {
       escapeValue: false,

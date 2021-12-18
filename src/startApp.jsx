@@ -7,12 +7,12 @@ import "./i18n.js";
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 const rollbarConfig = {
-  accessToken: '893e040092a4437c8fd6aea77735d269',
+  accessToken: 'POST_CLIENT_ITEM_ACCESS_TOKEN', // 'cf96e5d807e5492fb9377e245ab7ebc3',
   captureUncaught: true,
   captureUnhandledRejections: true,
   payload: {
     environment: 'production',
-  },
+  }
 };
 
 const startApp = () => {
