@@ -6,13 +6,15 @@ import '../assets/application.scss';
 import { injectStyle } from "react-toastify/dist/inject-style.js";
 import startApp from './startApp.jsx';
 
-if (process.env.NODE_ENV !== 'production') {
-  localStorage.debug = 'chat:*';
-}
+const init = () => {
+  if (process.env.NODE_ENV !== 'production') {
+    localStorage.debug = 'chat:*';
+  }
 
-injectStyle();
-startApp();
+  injectStyle();
+  startApp();
 
-console.log('it works!');
+  console.log('it works!');
+};
 
-export default startApp;
+export default init;
