@@ -14,3 +14,5 @@ injectStyle();
 startApp();
 
 console.log('it works!');
+
+export default startApp;
