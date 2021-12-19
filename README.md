@@ -2,6 +2,8 @@
 
 [![Github Actions Status](https://github.com/hexlet-components/projects-frontend-l4-server/workflows/Node%20CI/badge.svg)](https://github.com/hexlet-components/projects-frontend-l4-server/actions)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/dda63734ba3e85bf6ab0/maintainability)](https://codeclimate.com/github/temirKhan42/frontend-project-lvl4/maintainability)
+
 ## Link to app
 * [App](https://vast-river-17113.herokuapp.com/)
 
