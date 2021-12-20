@@ -18,11 +18,9 @@ const StartApp = ({ socket }) => {
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
-        <SocketProvider>
-          <Provider store={store}>
-            <App socket={socket} />
-          </Provider>
-        </SocketProvider>
+        <Provider store={store}>
+          <App socket={socket} />
+        </Provider>
       </ErrorBoundary>
     </RollbarProvider>
   );
