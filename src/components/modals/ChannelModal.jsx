@@ -1,4 +1,3 @@
-import useSocket from '../../hooks/useSocket.jsx';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from "react-redux";
@@ -6,12 +5,13 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import useAuth from '../../hooks/index.jsx';
 import _ from 'lodash';
 
 const AddingForm = ({ handleHide }) => {
   const { t } = useTranslation();
 
-  const client = useSocket();
+  const auth = useAuth();
 
   const notify = () => toast.success(t('notes.channel created'));
 
@@ -38,7 +38,7 @@ const AddingForm = ({ handleHide }) => {
       validationSchema={schema}
       onSubmit={(values) => {
         handleHide();
-        client.socket.emit('newChannel', values);
+        auth.socket.emit('newChannel', values);
         notify();
       }}
     >
@@ -86,7 +86,7 @@ const AddingForm = ({ handleHide }) => {
 const RenamingForm = ({ handleHide, channelId }) => {
   const { t } = useTranslation();
 
-  const client = useSocket();
+  const auth = useAuth();
 
   const notify = () => toast.success(t('notes.channel renamed'));
 
@@ -114,7 +114,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
       validationSchema={schema}
       onSubmit={(values) => {
         handleHide();
-        client.socket.emit('renameChannel', { id: channelId, ...values });
+        auth.socket.emit('renameChannel', { id: channelId, ...values });
         notify();
       }}
     >
@@ -162,13 +162,13 @@ const RenamingForm = ({ handleHide, channelId }) => {
 const RemovingForm = ({ handleHide, channelId }) => {
   const { t } = useTranslation();
 
-  const client = useSocket();
+  const auth = useAuth();
 
   const notify = () => toast.success(t('notes.channel removed'));
 
   const handleRemove = () => {
     handleHide();
-    client.socket.emit('removeChannel', { id: channelId });
+    auth.socket.emit('removeChannel', { id: channelId });
     notify();
   };
 

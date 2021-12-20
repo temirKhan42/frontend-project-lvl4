@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import authContext from '../context/index.jsx';
 import useAuth from '../hooks/index.jsx';
-import useSocket from '../hooks/useSocket.jsx';
 
 import LoginPage from './LoginPage.jsx';
 import HomePage from './homepage/HomePage.jsx';
@@ -25,7 +24,7 @@ import {
 
 import { ToastContainer } from 'react-toastify';
 
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({ socket, children }) => {
   const userId = localStorage.getItem('userId');
   const [loggedIn, setLoggedIn] = useState(!!userId);
 
@@ -37,7 +36,7 @@ const AuthProvider = ({ children }) => {
     setLoggedIn(false);
   };
   return (
-    <authContext.Provider value={{ loggedIn, logIn, logOut }}>
+    <authContext.Provider value={{ loggedIn, logIn, logOut, socket }}>
       {children}
     </authContext.Provider>
   );
@@ -83,28 +82,27 @@ const PrivateRoute = ({ children, ...rest }) => {
   );
 };
 
-export default function App() {
+export default function App({ socket }) {
   const dispatch = useDispatch();
-  const client = useSocket();
 
-  client.socket.on('newMessage', (newMessage) => {
+  socket.on('newMessage', (newMessage) => {
     dispatch(addMessage(newMessage));
   });
 
-  client.socket.on('newChannel', (channelWithId) => {
+  socket.on('newChannel', (channelWithId) => {
     dispatch(addChannel(channelWithId));
   });
 
-  client.socket.on('removeChannel', ({ id }) => {
+  socket.on('removeChannel', ({ id }) => {
     dispatch(removeChannel(id));
   });
 
-  client.socket.on('renameChannel', (newChannel) => {
+  socket.on('renameChannel', (newChannel) => {
     dispatch(renameChannel(newChannel));
   });
 
   return (
-    <AuthProvider>
+    <AuthProvider socket={socket}>
       <Router>
         <ToastContainer />
         <div className="d-flex flex-column h-100">

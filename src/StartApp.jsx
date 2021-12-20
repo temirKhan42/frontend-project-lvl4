@@ -4,7 +4,6 @@ import store from "./store/index.js";
 import { Provider } from "react-redux";
 import "./i18n.js";
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import socketContext from './context/socketContext.jsx';
 
 const StartApp = ({ socket }) => {
   const rollbarConfig = {
@@ -16,18 +15,12 @@ const StartApp = ({ socket }) => {
     }
   };
 
-  const SocketProvider = ({ children }) => (
-    <socketContext.Provider value={{ socket }}>
-      {children}
-    </socketContext.Provider>
-  );
-
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
         <SocketProvider>
           <Provider store={store}>
-            <App />
+            <App socket={socket} />
           </Provider>
         </SocketProvider>
       </ErrorBoundary>
