@@ -122,9 +122,11 @@ const CardBody = ({ children }) => {
 
 const Footer = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'loginPage' });
+  const history = useHistory();
 
   const handleClick = () => {
     console.error('CLICK!!!!!!!');
+    history.push('/signup');
   };
 
   return (
