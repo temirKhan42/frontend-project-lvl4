@@ -124,7 +124,7 @@ const Footer = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'loginPage' });
 
   const handleClick = () => {
-    console.log('CLICK!!!!!!!');
+    console.error('CLICK!!!!!!!');
   };
 
   return (
