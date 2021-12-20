@@ -16,13 +16,11 @@ const StartApp = ({ socket }) => {
     }
   };
 
-  const SocketProvider = ({ children }) => {
-    return (
-      <socketContext.Provider value={{ socket }}>
-        {children}
-      </socketContext.Provider>
-    );
-  };
+  const SocketProvider = ({ children }) => (
+    <socketContext.Provider value={{ socket }}>
+      {children}
+    </socketContext.Provider>
+  );
 
   return (
     <RollbarProvider config={rollbarConfig}>
