@@ -86,10 +86,13 @@ const SignupForm = () => {
         return (
           <Form noValidate className="w-50" onSubmit={handleSubmit}>
             <h1 className="text-center mb-4">{t('signupPage.form header')}</h1>
-            <FloatingLabel label={t('signupPage.username label')} className="mb-3 form-group">
+            <FloatingLabel
+              label={t('signupPage.username label')}
+              className="mb-3 form-group"
+              controlId="username"
+            >
               <Form.Control
                 type="text"
-                id="username"
                 name="username"
                 autoComplete="username"
                 placeholder={t('error messages.symbols ammount')}
@@ -104,10 +107,13 @@ const SignupForm = () => {
                 {errors.username}
               </Form.Control.Feedback>
             </FloatingLabel>
-            <FloatingLabel label={t('signupPage.password label')} className="mb-3 form-group">
+            <FloatingLabel
+              label={t('signupPage.password label')}
+              className="mb-3 form-group"
+              controlId="password"
+            >
               <Form.Control
                 type="password"
-                id="password"
                 name="password"
                 autoComplete="new-password"
                 placeholder={t('error messages.password symbols ammount')}
@@ -122,10 +128,13 @@ const SignupForm = () => {
                 {errors.password}
               </Form.Control.Feedback>
             </FloatingLabel>
-            <FloatingLabel label={t('signupPage.confirm password label')} className="mb-4 form-group">
+            <FloatingLabel
+              label={t('signupPage.confirm password label')}
+              className="mb-4 form-group"
+              controlId="confirmPassword"
+            >
               <Form.Control
                 type="password"
-                id="confirmPassword"
                 name="confirmPassword"
                 autoComplete="new-password"
                 placeholder={t('error messages.confirm password')}

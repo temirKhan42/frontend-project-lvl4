@@ -50,9 +50,12 @@ const LoginForm = () => {
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
       <h1 className="text-center mb-4">{t('loginPage.form header')}</h1>
       <Form.Group>
-        <FloatingLabel className="mb-3" label={t('loginPage.label username')}>
+        <FloatingLabel
+          className="mb-3"
+          label={t('loginPage.label username')}
+          controlId="username"
+        >
           <Form.Control
-            id="username"
             name="username"
             type="text"
             autoComplete="username"
@@ -69,9 +72,12 @@ const LoginForm = () => {
         </FloatingLabel>
       </Form.Group>
       <Form.Group>
-        <FloatingLabel className="mb-4" label={t('loginPage.label password')}>
+        <FloatingLabel
+          className="mb-4"
+          label={t('loginPage.label password')}
+          controlId="password"
+        >
           <Form.Control
-            id="password"
             name="password"
             type="password"
             autoComplete="current-password"
