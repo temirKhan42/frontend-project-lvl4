@@ -39,9 +39,6 @@ const LoginForm = () => {
         auth.logIn();
         history.push('/')
       } catch (err) {
-        if (option.username === '' && option.password === '') {
-          return;
-        }
         setAuthFailed(true);
         console.error(err);
         rollbar.error('Unauthorized user', err);
@@ -62,7 +59,6 @@ const LoginForm = () => {
             name="username"
             type="text"
             autoComplete="username"
-            className="form-control"
             placeholder={t('loginPage.label username')}
             required
             disabled={formik.isSubmitting}
@@ -85,16 +81,19 @@ const LoginForm = () => {
             type="password"
             autoComplete="current-password"
             placeholder={t('loginPage.label password')}
-            className="form-control"
             required
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password}
             isInvalid={authFailed}
           />
-          <Form.Control.Feedback type="invalid" tooltip>
-            {t('error messages.authorization failed')}
-          </Form.Control.Feedback>
+          {
+            !authFailed ? null : (
+              <Form.Control.Feedback type="invalid" tooltip>
+                {t('error messages.authorization failed')}
+              </Form.Control.Feedback>
+            )
+          }
         </FloatingLabel>
       </Form.Group>
       <Button
