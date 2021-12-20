@@ -11,7 +11,7 @@ const init = () => {
   }
 
   injectStyle();
-  return <StartApp />;
+  return StartApp;
 }
 
 export default init;
