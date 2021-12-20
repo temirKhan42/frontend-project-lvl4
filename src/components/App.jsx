@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { io } from 'socket.io-client';
 import { useTranslation } from "react-i18next";
 import {
   BrowserRouter as Router,
@@ -9,6 +8,7 @@ import {
 } from "react-router-dom";
 import authContext from '../context/index.jsx';
 import useAuth from '../hooks/index.jsx';
+import useSocket from '../hooks/useSocket.jsx';
 
 import LoginPage from './LoginPage.jsx';
 import HomePage from './homepage/HomePage.jsx';
@@ -85,21 +85,21 @@ const PrivateRoute = ({ children, ...rest }) => {
 
 export default function App() {
   const dispatch = useDispatch();
-  const socket = io();
+  const client = useSocket();
 
-  socket.on('newMessage', (newMessage) => {
+  client.socket.on('newMessage', (newMessage) => {
     dispatch(addMessage(newMessage));
   });
 
-  socket.on('newChannel', (channelWithId) => {
+  client.socket.on('newChannel', (channelWithId) => {
     dispatch(addChannel(channelWithId));
   });
 
-  socket.on('removeChannel', ({ id }) => {
+  client.socket.on('removeChannel', ({ id }) => {
     dispatch(removeChannel(id));
   });
 
-  socket.on('renameChannel', (newChannel) => {
+  client.socket.on('renameChannel', (newChannel) => {
     dispatch(renameChannel(newChannel));
   });
 

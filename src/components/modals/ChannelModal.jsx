@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import useSocket from '../../hooks/useSocket.jsx';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from "react-redux";
@@ -8,10 +8,10 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
 
-const socket = io();
-
 const AddingForm = ({ handleHide }) => {
   const { t } = useTranslation();
+
+  const client = useSocket();
 
   const notify = () => toast.success(t('notes.channel created'));
 
@@ -38,7 +38,7 @@ const AddingForm = ({ handleHide }) => {
       validationSchema={schema}
       onSubmit={(values) => {
         handleHide();
-        socket.emit('newChannel', values);
+        client.socket.emit('newChannel', values);
         notify();
       }}
     >
@@ -86,6 +86,8 @@ const AddingForm = ({ handleHide }) => {
 const RenamingForm = ({ handleHide, channelId }) => {
   const { t } = useTranslation();
 
+  const client = useSocket();
+
   const notify = () => toast.success(t('notes.channel renamed'));
 
   const channels = useSelector((state) => state.channel.channels);
@@ -112,7 +114,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
       validationSchema={schema}
       onSubmit={(values) => {
         handleHide();
-        socket.emit('renameChannel', { id: channelId, ...values });
+        client.socket.emit('renameChannel', { id: channelId, ...values });
         notify();
       }}
     >
@@ -160,11 +162,13 @@ const RenamingForm = ({ handleHide, channelId }) => {
 const RemovingForm = ({ handleHide, channelId }) => {
   const { t } = useTranslation();
 
+  const client = useSocket();
+
   const notify = () => toast.success(t('notes.channel removed'));
 
   const handleRemove = () => {
     handleHide();
-    socket.emit('removeChannel', { id: channelId });
+    client.socket.emit('removeChannel', { id: channelId });
     notify();
   };
 

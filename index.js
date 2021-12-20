@@ -6,13 +6,13 @@ import { injectStyle } from "react-toastify/dist/inject-style.js";
 import React from "react";
 import StartApp from './src/StartApp.jsx';
 
-const init = () => {
+const init = (socket) => {
   if (process.env.NODE_ENV !== 'production') {
     localStorage.debug = 'chat:*';
   }
 
   injectStyle();
-  return <StartApp />;
+  return <StartApp socket={socket} />;
 }
 
 export default init;

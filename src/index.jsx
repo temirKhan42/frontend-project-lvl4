@@ -6,14 +6,17 @@ import '../assets/application.scss';
 import { injectStyle } from "react-toastify/dist/inject-style.js";
 import ReactDOM from "react-dom";
 import StartApp from './StartApp.jsx';
+import { io } from 'socket.io-client';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
+const socket = io();
+
 injectStyle();
 ReactDOM.render(
-  <StartApp />,
+  <StartApp socket={socket} />,
   document.getElementById('chat')
 );
 
