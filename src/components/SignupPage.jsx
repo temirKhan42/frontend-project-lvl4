@@ -158,7 +158,7 @@ const SignupImage = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'signupPage' })
   return (
     <div>
-      <img src={image} className="rounded-circle" alt={t('image alt')} />
+      <img src="#" className="rounded-circle" alt={t('image alt')} />
     </div>
   );
 };
