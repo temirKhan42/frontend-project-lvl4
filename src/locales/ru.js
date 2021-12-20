@@ -13,12 +13,12 @@ export default {
       'signup': 'Регистрация',
     },
     signupPage: {
-      'form header': 'Registration',
+      'form header': 'Регистрация',
       'username label': 'Имя пользователя',
       'password label': 'Пароль',
       'confirm password label': 'Подтвердите пароль',
       'submit button': 'Зарегистрироваться',
-      'image alt': 'Registration',
+      'image alt': 'Регистрация',
     },
     'error messages': {
       'authorization failed': 'Неверные имя пользователя или пароль',

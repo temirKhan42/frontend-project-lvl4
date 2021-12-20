@@ -122,11 +122,16 @@ const CardBody = ({ children }) => {
 
 const Footer = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'loginPage' });
+
+  const handleClick = () => {
+    console.log('CLICK!!!!!!!');
+  };
+
   return (
     <div className="card-footer p-4">
       <div className="text-center">
         <span>{t('acaunt question')}</span>
-        <a href="/signup">{t('signup')}</a>
+        <a href="/signup" onClick={handleClick}>{t('signup')}</a>
       </div>
     </div>
   );
