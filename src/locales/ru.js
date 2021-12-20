@@ -13,7 +13,7 @@ export default {
       'signup': 'Регистрация',
     },
     signupPage: {
-      'form header': 'Регистрация',
+      'form header': 'Регистраци',
       'username label': 'Имя пользователя',
       'password label': 'Пароль',
       'confirm password label': 'Подтвердите пароль',

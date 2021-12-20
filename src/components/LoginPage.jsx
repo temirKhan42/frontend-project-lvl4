@@ -126,7 +126,7 @@ const Footer = () => {
     <div className="card-footer p-4">
       <div className="text-center">
         <span>{t('acaunt question')}</span>
-        <a href="/signup"> {t('signup')}</a>
+        <a href="/signup">{t('signup')}</a>
       </div>
     </div>
   );
