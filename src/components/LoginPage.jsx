@@ -40,7 +40,7 @@ const LoginForm = () => {
         history.push('/')
       } catch (err) {
         setAuthFailed(true);
-        console.error(err);
+        console.log(err);
         rollbar.error('Unauthorized user', err);
       }
     },
@@ -125,7 +125,6 @@ const Footer = () => {
   const history = useHistory();
 
   const handleClick = () => {
-    console.error('CLICK!!!!!!!');
     history.push('/signup');
   };
 
