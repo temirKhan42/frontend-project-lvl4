@@ -105,7 +105,7 @@ const MessageForm = () => {
                   type="submit"
                   className="btn"
                   vertical
-                  disabled={values.text === ''}
+                  disabled={values.text === '' || isSubmitting}
                   role="button"
                   onClick={handleClick}
                 >
