@@ -68,14 +68,14 @@ const MessageForm = () => {
       onSubmit={(values, { resetForm }) => {
         const { text } = filterObsceneText(values);
         const { username } = JSON.parse(localStorage.getItem('userId'));
+        resetForm({ values: '' });
         console.log(text);
         const newMessage = {
           channelId: currentChannelId,
           username,
           text,
-        }
+        };
         auth.socket.emit('newMessage', newMessage);
-        resetForm({ values: '' });
       }}
     >
       {({
