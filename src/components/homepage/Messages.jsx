@@ -15,16 +15,17 @@ const MessageBox = () => {
   });
 
   const { currentChannelId, messages } = useSelector((state) => state.channel);
-  const channelMessages = messages
-    .filter(({ channelId }) => channelId === currentChannelId);
 
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5">
-      {channelMessages.map(({ channelId, id, username, text }) => (
-        <div key={`${channelId}-${id}`} className="text-break mb-2">
-          <b>{username}</b>: {text}
-        </div>
-      ))}
+      {messages
+        .filter(({ channelId }) => channelId === currentChannelId)
+        .map(({ channelId, id, username, text }) => (
+          <div key={`${channelId}-${id}`} className="text-break mb-2">
+            <b>{username}</b>: {text}
+          </div>
+        ))
+      }
       <div ref={divRef} />
     </div>
   );
