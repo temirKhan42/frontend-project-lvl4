@@ -42,6 +42,7 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     setCurrentChannel: (state, action) => {
+      console.log('At ChatSlice.js From Reducer Of Set Current Channel Id')
       state.currentChannelId = action.payload;
     },
     addChannel: (state, action) => {

@@ -15,7 +15,7 @@ const MessageBox = () => {
   });
 
   const { currentChannelId, messages } = useSelector((state) => state.channel);
-
+  console.log(`${currentChannelId} - is current Channel Id From MeassageBox At Messages.jsx`);
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5">
       {messages
