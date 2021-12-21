@@ -45,6 +45,7 @@ export const chatSlice = createSlice({
       state.currentChannelId = action.payload;
     },
     addChannel: (state, action) => {
+      console.log('Add Channel Reducer in ChatSlice.js');
       state.channels.push(action.payload);
       state.currentChannelId = action.payload.id;
     },

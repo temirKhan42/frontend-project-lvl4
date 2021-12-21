@@ -93,6 +93,7 @@ export default function App({ socket }) {
   const dispatch = useDispatch();
 
   socket.on('newMessage', (newMessage) => {
+    console.log('Socket On New Message in App.jsx');
     dispatch(addMessage(newMessage));
   });
 
