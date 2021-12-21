@@ -1,13 +1,11 @@
-import { io } from 'socket.io-client'
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { Form, InputGroup, ButtonGroup } from 'react-bootstrap';
 import * as Yup from 'yup';
+import useAuth from '../../hooks/index.jsx';
 import filter from 'leo-profanity';
-
-const socket = io();
 
 const MessageBox = () => {
   const divRef = useRef(null);
@@ -52,6 +50,8 @@ const MessageForm = () => {
     inputRef.current.select();
   });
 
+  const auth = useAuth();
+
   const schema = Yup.object().shape({
     body: Yup.string().required(t('error messages.required')),
   });
@@ -69,7 +69,7 @@ const MessageForm = () => {
           username,
           text,
         }
-        socket.emit('newMessage', newMessage);
+        auth.socket.emit('newMessage', newMessage);
         resetForm({ values: '' });
       }}
     >
