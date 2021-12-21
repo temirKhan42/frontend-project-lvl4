@@ -40,6 +40,9 @@ const LoginForm = () => {
         history.push('/')
         console.log('PUSHHHHHHHHHHHH');
       } catch (err) {
+        if (option.username === '' && option.password === '') {
+          return;
+        }
         setAuthFailed(true);
         console.log(err);
         rollbar.error('Unauthorized user', err);
