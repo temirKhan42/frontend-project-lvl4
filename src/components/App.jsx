@@ -5,6 +5,7 @@ import {
   Route,
   Switch,
   Redirect,
+  useHistory,
 } from "react-router-dom";
 import authContext from '../context/index.jsx';
 import useAuth from '../hooks/index.jsx';
@@ -45,10 +46,16 @@ const AuthProvider = ({ socket, children }) => {
 const Nav = () => {
   const { t } = useTranslation();
   const auth = useAuth();
+  const history = useHistory();
+  const handleClick = () => {
+    console.log('App Nav Handle Click On Link');
+    history.push('/');
+  };
+
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
-        <a className="navbar-brand" href="/">Hexlet Chat</a>
+        <a className="navbar-brand" onClick={handleClick} href="/">Hexlet Chat</a>
         {auth.loggedIn ? (
           <button
             type="button"

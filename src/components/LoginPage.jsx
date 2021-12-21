@@ -137,7 +137,7 @@ const Footer = () => {
     <div className="card-footer p-4">
       <div className="text-center">
         <span>{t('acaunt question')}</span>
-        <a href="#" onClick={handleClick}>{t('signup')}</a>
+        <a href="/signup" onClick={handleClick}>{t('signup')}</a>
       </div>
     </div>
   );
