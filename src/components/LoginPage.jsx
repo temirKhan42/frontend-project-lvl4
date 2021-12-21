@@ -38,6 +38,7 @@ const LoginForm = () => {
         localStorage.setItem('userId', JSON.stringify(data));
         auth.logIn();
         history.push('/')
+        console.log('PUSHHHHHHHHHHHH');
       } catch (err) {
         setAuthFailed(true);
         console.log(err);
@@ -125,6 +126,7 @@ const Footer = () => {
   const history = useHistory();
 
   const handleClick = () => {
+    console.log('PUSHHH SIGNUPPPPPP')
     history.push('/signup');
   };
 
@@ -132,7 +134,7 @@ const Footer = () => {
     <div className="card-footer p-4">
       <div className="text-center">
         <span>{t('acaunt question')}</span>
-        <a href="/signup" onClick={handleClick}>{t('signup')}</a>
+        <a href="#" onClick={handleClick}>{t('signup')}</a>
       </div>
     </div>
   );
