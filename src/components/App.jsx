@@ -89,10 +89,9 @@ const PrivateRoute = ({ children, ...rest }) => {
   const history = useHistory();
   console.log("From Private Route After click on Hexlet Chat");
   return (
-    <Route
-      {...rest}
-      render={() => auth.loggedIn ? children : history.push('/login')}
-    />
+    <Route {...rest} >
+      {auth.loggedIn ? children : history.push('/login')}
+    </Route>
   );
 };
 
