@@ -86,6 +86,7 @@ const Nav = () => {
 
 const PrivateRoute = ({ children, ...rest }) => {
   const auth = useAuth();
+  consol.log("From Private Route After click on Hexlet Chat");
   return (
     <Route
       {...rest}
