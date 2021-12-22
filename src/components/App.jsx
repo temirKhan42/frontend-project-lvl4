@@ -87,11 +87,13 @@ const Nav = () => {
 const PrivateRoute = () => {
   const auth = useAuth();
   const history = useHistory();
+  console.log('Before redirect On Private')
   if (!auth.loggedIn) {
+    console.log('At The Moment Of Redirecting');
     history.push('/login');
     return null;
   }
-  console.log("From Private Route After click on Hexlet Chat");
+  console.log("Without Redirecting on Private");
   return <HomePage />;
 };
 
