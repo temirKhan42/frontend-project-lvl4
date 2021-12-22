@@ -2,20 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannel, fetchChannels } from '../../slices/chatSlice.js';
-import { useRollbar } from '@rollbar/react';
 import classNames from 'classnames';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import ChannelModal from '../modals/ChannelModal.jsx';
+import useAuth from '../../hooks/index.jsx';
 
-const AddChannel = ({ setIsModalOpen }) => {
+const AddChannel = () => {
+  const auth = useAuth();
+
   const { t } = useTranslation('translation', { keyPrefix: 'homePage' });
 
   const [showAddChannel, setShowAddChannel] = useState(false);
 
-  const handleShow = () => setShowAddChannel(true);
-  const handleHide = () => setShowAddChannel(false);
-
-  setIsModalOpen(showAddChannel);
+  const handleShow = () => {
+    setShowAddChannel(true);
+    auth.openModal();
+  }
+  const handleHide = () => {
+    setShowAddChannel(false);
+    auth.closeModal();
+  }
 
   return (
     <>
@@ -35,8 +41,10 @@ const AddChannel = ({ setIsModalOpen }) => {
   );
 };
 
-const RemovableChannel = ({ name, id, btnClasses, btnSecondary, setIsModalOpen }) => {
+const RemovableChannel = ({ name, id, btnClasses, btnSecondary }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'homePage' });
+
+  const auth = useAuth();
 
   const drpdnBtnClss = 'flex-grow-0 dropdown-toggle dropdown-toggle-split btn';
   const dropdownBtnClasses = classNames(drpdnBtnClss, { ...btnSecondary });
@@ -49,13 +57,22 @@ const RemovableChannel = ({ name, id, btnClasses, btnSecondary, setIsModalOpen }
   const [showModalRename, setShowModalRename] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
 
-  const handleShowRenaming = () => setShowModalRename(true);
-  const handleHideRenaming = () => setShowModalRename(false);
-  const handleShowRemoving = () => setShowModalRemove(true);
-  const handleHideRemoving = () => setShowModalRemove(false);
-
-  const isModalOpen = showModalRemove || showModalRename;
-  setIsModalOpen(isModalOpen);
+  const handleShowRenaming = () => {
+    setShowModalRename(true);
+    auth.openModal();
+  };
+  const handleHideRenaming = () => {
+    setShowModalRename(false);
+    auth.closeModal();
+  };
+  const handleShowRemoving = () => {
+    setShowModalRemove(true);
+    auth.openModal();
+  };
+  const handleHideRemoving = () => {
+    setShowModalRemove(false);
+    auth.closeModal();
+  };
 
   return (
     <>
@@ -119,18 +136,12 @@ const UnremovableChannel = ({ name, id, btnClasses }) => {
   );
 }
 
-const ChannelList = ({ setIsModalOpen }) => {
+const ChannelList = () => {
   const { channels, currentChannelId } = useSelector((state) => state.channel);
   const dispatch = useDispatch();
-  const rollbar = useRollbar();
 
   useEffect(() => {
-    try {
-      dispatch(fetchChannels());
-    } catch (err) {
-      console.error(err);
-      rollbar.error('Failed Fetch Channels', err);
-    };
+    dispatch(fetchChannels());
   }, []);
 
   return (
@@ -149,7 +160,6 @@ const ChannelList = ({ setIsModalOpen }) => {
             id={id}
             btnClasses={btnClasses}
             btnSecondary={btnSecondary}
-            setIsModalOpen={setIsModalOpen}
           /> :
           <UnremovableChannel
             key={`${id}-${name}`}
@@ -163,10 +173,10 @@ const ChannelList = ({ setIsModalOpen }) => {
   );
 };
 
-const Channels = ({ setIsModalOpen }) => (
+const Channels = () => (
   <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
-    <AddChannel setIsModalOpen={setIsModalOpen} />
-    <ChannelList setIsModalOpen={setIsModalOpen} />
+    <AddChannel />
+    <ChannelList />
   </div>
 );
 

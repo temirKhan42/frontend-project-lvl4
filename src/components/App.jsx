@@ -27,17 +27,30 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const AuthProvider = ({ socket, children }) => {
   const userId = localStorage.getItem('userId');
+
   const [loggedIn, setLoggedIn] = useState(!!userId);
 
-  const logIn = () => {
-    setLoggedIn(true);
-  };
+  const logIn = () => setLoggedIn(true);
   const logOut = () => {
     localStorage.removeItem('userId');
     setLoggedIn(false);
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
-    <authContext.Provider value={{ loggedIn, logIn, logOut, socket }}>
+    <authContext.Provider value={{
+      loggedIn,
+      logIn,
+      logOut,
+      socket,
+      isModalOpen,
+      openModal,
+      closeModal,
+    }}>
       {children}
     </authContext.Provider>
   );
@@ -92,6 +105,8 @@ const PrivateRoute = ({ children, ...rest }) => {
 export default function App({ socket }) {
   const dispatch = useDispatch();
 
+  const auth = useAuth();
+
   const { t } = useTranslation();
   const notifyChannelCreated = () => toast.success(t('notes.channel created'));
   const notifyChannelRenamed = () => toast.success(t('notes.channel renamed'));
@@ -119,7 +134,7 @@ export default function App({ socket }) {
   return (
     <AuthProvider socket={socket}>
       <Router>
-        <div className="d-flex flex-column h-100">
+        <div className="d-flex flex-column h-100" aria-hidden={auth.isModalOpen}>
           <Nav />
           <Switch>
             <PrivateRoute exact path="/">
