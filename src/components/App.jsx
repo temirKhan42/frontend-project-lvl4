@@ -69,7 +69,7 @@ const Nav = () => {
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
-        <a className="navbar-brand" onClick={handleClick}>Hexlet Chat</a>
+        <a className="navbar-brand" href="/" onClick={handleClick}>Hexlet Chat</a>
         {auth.loggedIn ? (
           <button
             type="button"
@@ -130,18 +130,10 @@ export default function App({ socket }) {
     notifyChannelRenamed();
   });
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const auth = useAuth();
-
-  const modals = Object.entries(auth.modals);
-
-  setIsModalOpen(modals.some(([key, val]) => val === 'open'));
-
   return (
     <AuthProvider socket={socket}>
       <Router>
-        <div className="d-flex flex-column h-100" aria-hidden={isModalOpen}>
+        <div className="d-flex flex-column h-100">
           <Nav />
           <Switch>
             <PrivateRoute exact path="/">
