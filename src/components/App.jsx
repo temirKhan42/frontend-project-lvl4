@@ -5,6 +5,7 @@ import {
   Route,
   Switch,
   Redirect,
+  useLocation,
   useHistory,
 } from "react-router-dom";
 import authContext from '../context/index.jsx';
@@ -60,10 +61,14 @@ const AuthProvider = ({ socket, children }) => {
 const Nav = () => {
   const { t } = useTranslation();
   const auth = useAuth();
-  const history = useHistory();
+  const location = useLocation();
+
   const handleClick = () => {
     console.log('App Nav Handle Click On Link');
-    history.push('/');
+    return (<Redirect to={{
+      pathname: '/',
+      state: { from: location },
+    }} />);
   };
 
   return (
