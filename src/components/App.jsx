@@ -87,8 +87,12 @@ const Nav = () => {
 const PrivateRoute = () => {
   const auth = useAuth();
   const history = useHistory();
+  if (!auth.loggedIn) {
+    history.push('/login');
+    return null;
+  }
   console.log("From Private Route After click on Hexlet Chat");
-  return (auth.loggedIn ? <HomePage /> : history.push('/login'));
+  return <HomePage />;
 };
 
 export default function App({ socket }) {
