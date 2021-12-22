@@ -18,7 +18,7 @@ const fetchData = async (token) => {
 
     return response;
   } catch (err) {
-    console.log(err.status);
+    console.log(err);
     if (err.status === '500') {
       notify();
     }
