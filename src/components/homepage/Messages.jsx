@@ -71,7 +71,7 @@ const MessageForm = () => {
           username,
           text,
         };
-        auth.socket.emit('newMessage', newMessage);
+        auth.socket.emit('newMessage', newMessage, (res) => console.log(res));
       }}
     >
       {({

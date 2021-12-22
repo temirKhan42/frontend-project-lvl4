@@ -2,6 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import _ from 'lodash';
 import axios from 'axios';
 import routes from '../routes.js';
+import { toast } from 'react-toastify';
+
+const notify = () => toast.error('Ошибка соединения');
 
 const fetchData = async (token) => {
   try {
@@ -15,6 +18,10 @@ const fetchData = async (token) => {
 
     return response;
   } catch (err) {
+    console.log(err.status);
+    if (err.status === '500') {
+      notify();
+    }
     console.error('Failed Fetch Data Request');
   }
 };

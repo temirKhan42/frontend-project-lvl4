@@ -8,7 +8,6 @@ import routes from '../routes.js';
 import useAuth from "../hooks/index.jsx";
 import loginImage from "../../assets/login-image.js";
 import { useRollbar } from '@rollbar/react';
-import { toast } from 'react-toastify';
 
 const getData = async (option) => {
   const { data } = await axios.post(routes.loginPath(), option);
@@ -19,8 +18,6 @@ const LoginForm = () => {
   const rollbar = useRollbar();
 
   const { t } = useTranslation();
-
-  const notify = () => toast.error('Ошибка соединения');
 
   const history = useHistory();
 
@@ -43,11 +40,8 @@ const LoginForm = () => {
         auth.logIn();
         history.push('/')
       } catch (err) {
-        console.log(err.status);
         if (option.username === '' && option.password === '') {
           return;
-        } else if (err.status === '500') {
-          notify();
         }
         setAuthFailed(true);
         console.log(err);

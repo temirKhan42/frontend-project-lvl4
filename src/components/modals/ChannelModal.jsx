@@ -35,7 +35,7 @@ const AddingForm = ({ handleHide }) => {
       validationSchema={schema}
       onSubmit={(values) => {
         handleHide();
-        auth.socket.emit('newChannel', values);
+        auth.socket.emit('newChannel', values, (res) => console.log(res));
       }}
     >
       {({
@@ -108,7 +108,10 @@ const RenamingForm = ({ handleHide, channelId }) => {
       validationSchema={schema}
       onSubmit={(values) => {
         handleHide();
-        auth.socket.emit('renameChannel', { id: channelId, ...values });
+        auth.socket.emit('renameChannel', {
+          id: channelId,
+          ...values
+        }, (res) => console.log(res));
       }}
     >
       {({
