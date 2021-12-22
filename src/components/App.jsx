@@ -84,15 +84,11 @@ const Nav = () => {
   );
 };
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = () => {
   const auth = useAuth();
   const history = useHistory();
   console.log("From Private Route After click on Hexlet Chat");
-  return (
-    <Route {...rest} >
-      {auth.loggedIn ? children : history.push('/login')}
-    </Route>
-  );
+  return (auth.loggedIn ? <HomePage /> : history.push('/login'));
 };
 
 export default function App({ socket }) {
@@ -128,9 +124,9 @@ export default function App({ socket }) {
         <div className="d-flex flex-column h-100">
           <Nav />
           <Switch>
-            <PrivateRoute exact path="/">
-              <HomePage />
-            </PrivateRoute>
+            <Route exact path="/">
+              <PrivateRoute />
+            </Route>
             <Route path="/login">
               <LoginPage />
             </Route>
