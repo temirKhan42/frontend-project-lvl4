@@ -57,7 +57,7 @@ export default {
     'notes': {
       'channel created': 'Канал создан',
       'channel renamed': 'Канал переименован',
-      'channel removed': 'Канал удален',
+      'channel removed': 'Канал удалён',
     },
   },
 };
