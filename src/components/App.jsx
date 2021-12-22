@@ -5,6 +5,7 @@ import {
   Route,
   Switch,
   Redirect,
+  useLocation,
   useHistory,
 } from "react-router-dom";
 import authContext from '../context/index.jsx';
@@ -87,13 +88,14 @@ const Nav = () => {
 const PrivateRoute = () => {
   const auth = useAuth();
   const history = useHistory();
-  console.log('Before redirect On Private')
+  const location = useLocation();
+  console.log(`Before redirect On Private, location is - ${location}`)
   if (!auth.loggedIn) {
-    console.log('At The Moment Of Redirecting');
+    console.log(`At The Moment Of Redirecting, location is - ${location}`);
     history.push('/login');
     return null;
   }
-  console.log("Without Redirecting on Private");
+  console.log(`Without Redirecting on Private, location is - ${location}`);
   return <HomePage />;
 };
 
