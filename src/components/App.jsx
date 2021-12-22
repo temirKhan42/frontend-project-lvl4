@@ -60,10 +60,10 @@ const AuthProvider = ({ socket, children }) => {
 const Nav = () => {
   const { t } = useTranslation();
   const auth = useAuth();
-
+  const history = useHistory();
   const handleClick = () => {
     console.log('App Nav Handle Click On Link');
-    return <Redirect to='/' />;
+    history.push('/');
   };
 
   return (
@@ -93,11 +93,10 @@ const PrivateRoute = ({ children, ...rest }) => {
         children
       ) : (
         <Redirect
-          to='/login'
-        // to={{
-        //   pathname: "/login",
-        //   state: { from: location },
-        // }}
+          to={{
+            pathname: "/login",
+            state: { from: location },
+          }}
         />
       ))}
     />
