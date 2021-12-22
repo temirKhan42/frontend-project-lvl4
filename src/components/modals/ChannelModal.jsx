@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
-import { toast } from 'react-toastify';
 import useAuth from '../../hooks/index.jsx';
 import _ from 'lodash';
 
@@ -12,8 +11,6 @@ const AddingForm = ({ handleHide }) => {
   const { t } = useTranslation();
 
   const auth = useAuth();
-
-  const notify = () => toast.success(t('notes.channel created'));
 
   const channels = useSelector((state) => state.channel.channels);
 
@@ -39,7 +36,6 @@ const AddingForm = ({ handleHide }) => {
       onSubmit={(values) => {
         handleHide();
         auth.socket.emit('newChannel', values);
-        notify();
       }}
     >
       {({
@@ -88,8 +84,6 @@ const RenamingForm = ({ handleHide, channelId }) => {
 
   const auth = useAuth();
 
-  const notify = () => toast.success(t('notes.channel renamed'));
-
   const channels = useSelector((state) => state.channel.channels);
 
   const inputRef = useRef();
@@ -115,7 +109,6 @@ const RenamingForm = ({ handleHide, channelId }) => {
       onSubmit={(values) => {
         handleHide();
         auth.socket.emit('renameChannel', { id: channelId, ...values });
-        notify();
       }}
     >
       {({
@@ -164,12 +157,9 @@ const RemovingForm = ({ handleHide, channelId }) => {
 
   const auth = useAuth();
 
-  const notify = () => toast.success(t('notes.channel removed'));
-
   const handleRemove = () => {
     handleHide();
     auth.socket.emit('removeChannel', { id: channelId });
-    notify();
   };
 
   return (

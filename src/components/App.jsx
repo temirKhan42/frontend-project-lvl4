@@ -23,7 +23,7 @@ import {
   addMessage,
 } from "../slices/chatSlice.js";
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 const AuthProvider = ({ socket, children }) => {
   const userId = localStorage.getItem('userId');
@@ -92,21 +92,28 @@ const PrivateRoute = ({ children, ...rest }) => {
 export default function App({ socket }) {
   const dispatch = useDispatch();
 
+  const { t } = useTranslation();
+  const notifyChannelCreated = () => toast.success(t('notes.channel created'));
+  const notifyChannelRenamed = () => toast.success(t('notes.channel renamed'));
+  const notifyChannelRemoved = () => toast.success(t('notes.channel removed'));
+
   socket.on('newMessage', (newMessage) => {
-    console.log('Socket On New Message in App.jsx');
     dispatch(addMessage(newMessage));
   });
 
   socket.on('newChannel', (channelWithId) => {
     dispatch(addChannel(channelWithId));
+    notifyChannelCreated();
   });
 
   socket.on('removeChannel', ({ id }) => {
     dispatch(removeChannel(id));
+    notifyChannelRemoved();
   });
 
   socket.on('renameChannel', (newChannel) => {
     dispatch(renameChannel(newChannel));
+    notifyChannelRenamed();
   });
 
   return (
