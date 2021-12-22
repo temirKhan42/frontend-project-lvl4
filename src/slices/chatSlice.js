@@ -19,7 +19,7 @@ const fetchData = async (token) => {
     return response;
   } catch (err) {
     console.log(err.response.status);
-    if (err.response.status === '500') {
+    if (err.response.status === 500) {
       notify();
     }
     console.error('Failed Fetch Data Request');
