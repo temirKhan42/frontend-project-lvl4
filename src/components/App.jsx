@@ -112,7 +112,6 @@ export default function App({ socket }) {
   return (
     <AuthProvider socket={socket}>
       <Router>
-        <ToastContainer />
         <div className="d-flex flex-column h-100">
           <Nav />
           <Switch>
@@ -130,6 +129,7 @@ export default function App({ socket }) {
             </Route>
           </Switch>
         </div>
+        <ToastContainer />
       </Router>
     </AuthProvider>
   );
