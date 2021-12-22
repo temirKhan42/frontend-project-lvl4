@@ -159,7 +159,7 @@ const RemovingForm = ({ handleHide, channelId }) => {
 
   const handleRemove = () => {
     handleHide();
-    auth.socket.emit('removeChannel', { id: channelId });
+    auth.socket.emit('removeChannel', { id: channelId }, (res) => console.log(res));
   };
 
   return (
