@@ -106,7 +106,6 @@ const UnremovableChannel = ({ name, id, btnClasses }) => {
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.preventDefault();
-    console.log('Click To Unremovable Channel');
     dispatch(setCurrentChannel(id));
   };
 

@@ -18,11 +18,9 @@ const fetchData = async (token) => {
 
     return response;
   } catch (err) {
-    console.log(err.response.status);
     if (err.response.status === 500) {
       notify();
     }
-    console.error('Failed Fetch Data Request');
   }
 };
 
@@ -49,11 +47,9 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     setCurrentChannel: (state, action) => {
-      console.log('At ChatSlice.js From Reducer Of Set Current Channel Id')
       state.currentChannelId = action.payload;
     },
     addChannel: (state, action) => {
-      console.log('Add Channel Reducer in ChatSlice.js');
       state.channels.push(action.payload);
       state.currentChannelId = action.payload.id;
     },

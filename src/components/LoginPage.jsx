@@ -6,8 +6,8 @@ import { useHistory } from 'react-router-dom';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import routes from '../routes.js';
 import useAuth from "../hooks/index.jsx";
-import loginImage from "../../assets/login-image.js";
-import { useRollbar } from '@rollbar/react';
+// import loginImage from "../../assets/login-image.js";
+//  import { useRollbar } from '@rollbar/react';
 
 const getData = async (option) => {
   const { data } = await axios.post(routes.loginPath(), option);
@@ -15,7 +15,7 @@ const getData = async (option) => {
 };
 
 const LoginForm = () => {
-  const rollbar = useRollbar();
+  //  const rollbar = useRollbar();
 
   const { t } = useTranslation();
 
@@ -44,8 +44,6 @@ const LoginForm = () => {
           return;
         }
         setAuthFailed(true);
-        console.log(err);
-        // rollbar.error('Unauthorized user', err);
       }
     },
   });

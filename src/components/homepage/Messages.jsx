@@ -15,7 +15,7 @@ const MessageBox = () => {
   });
 
   const { currentChannelId, messages } = useSelector((state) => state.channel);
-  console.log(`${currentChannelId} - is current Channel Id From MeassageBox At Messages.jsx`);
+
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5">
       {messages
@@ -65,7 +65,6 @@ const MessageForm = () => {
         const { text } = filterObsceneText(values);
         const { username } = JSON.parse(localStorage.getItem('userId'));
         resetForm({ values: '' });
-        console.log(text);
         const newMessage = {
           channelId: currentChannelId,
           username,

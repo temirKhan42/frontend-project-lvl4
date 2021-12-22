@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import image from '../../assets/signup-image.js';
 import * as Yup from 'yup';
-import { Formik, useFormik } from 'formik';
+import { Formik } from 'formik';
 import { Form, FloatingLabel, Button } from 'react-bootstrap';
 import routes from '../routes.js';
 import axios from "axios";
 import useAuth from '../hooks/index.jsx';
 import { useHistory } from "react-router-dom";
-import { useRollbar } from '@rollbar/react';
+// import { useRollbar } from '@rollbar/react';
+// import image from '../../assets/signup-image.js';
 
 const getData = async (option) => {
   const { data } = await axios.post(routes.signupPath(), option);
@@ -18,7 +18,7 @@ const getData = async (option) => {
 const SignupForm = () => {
   const { t } = useTranslation();
 
-  const rollbar = useRollbar();
+  //  const rollbar = useRollbar();
 
   const auth = useAuth();
 
