@@ -86,20 +86,12 @@ const Nav = () => {
 
 const PrivateRoute = ({ children, ...rest }) => {
   const auth = useAuth();
+  const history = useHistory();
   console.log("From Private Route After click on Hexlet Chat");
   return (
     <Route
       {...rest}
-      render={({ location }) => (auth.loggedIn ? (
-        children
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: location },
-          }}
-        />
-      ))}
+      render={() => auth.loggedIn ? children : history.push('/login')}
     />
   );
 };
