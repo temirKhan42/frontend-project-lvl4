@@ -71,7 +71,9 @@ const RemovableChannel = ({ name, id, btnClasses, btnSecondary, setIsModalOpen }
             variant=""
             className={dropdownBtnClasses}
             id="dropdown-split-basic"
-          />
+          >
+            <span className="visually-hidden">Управление каналом</span>
+          </Dropdown.Toggle>
 
           <Dropdown.Menu>
             <Dropdown.Item onClick={handleShowRemoving} href="#">
