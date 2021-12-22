@@ -31,6 +31,7 @@ export default {
     },
     homePage: {
       'channel list': 'Каналы',
+      'channel control': 'Управление каналом',
       'removing channel modal button': 'Удалить',
       'renaming channel modal button': 'Переименовать',
       'text message label': 'Новое сообщение',

@@ -37,9 +37,9 @@ const AddChannel = ({ setIsModalOpen }) => {
 
 const RemovableChannel = ({ name, id, btnClasses, btnSecondary, setIsModalOpen }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'homePage' });
-  const dropdownBtnClasses = classNames('flex-grow-0 dropdown-toggle dropdown-toggle-split btn', {
-    ...btnSecondary,
-  });
+
+  const drpdnBtnClss = 'flex-grow-0 dropdown-toggle dropdown-toggle-split btn';
+  const dropdownBtnClasses = classNames(drpdnBtnClss, { ...btnSecondary });
 
   const dispatch = useDispatch();
   const handleBtnClick = () => {
@@ -72,7 +72,7 @@ const RemovableChannel = ({ name, id, btnClasses, btnSecondary, setIsModalOpen }
             className={dropdownBtnClasses}
             id="dropdown-split-basic"
           >
-            <span className="visually-hidden">Управление каналом</span>
+            <span className="visually-hidden">{t('channel control')}</span>
           </Dropdown.Toggle>
 
           <Dropdown.Menu>

@@ -71,7 +71,7 @@ const SignupForm = () => {
           if (err.message === 'Request failed with status code 409') {
             setAuthUniqFailed(true);
             console.log(err);
-            rollbar.error('Authentication failed', err);
+            // rollbar.error('Authentication failed', err);
           }
         }
       }}
