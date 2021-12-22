@@ -16,12 +16,16 @@ const AddChannel = () => {
 
   const handleShow = () => {
     setShowAddChannel(true);
-    auth.openModal();
-  }
+    auth.updateModals(modal => {
+      modal.addChannel = 'open';
+    });
+  };
   const handleHide = () => {
     setShowAddChannel(false);
-    auth.closeModal();
-  }
+    auth.updateModals(modal => {
+      modal.addChannel = 'close';
+    });
+  };
 
   return (
     <>
@@ -59,19 +63,27 @@ const RemovableChannel = ({ name, id, btnClasses, btnSecondary }) => {
 
   const handleShowRenaming = () => {
     setShowModalRename(true);
-    auth.openModal();
+    auth.updateModals(modal => {
+      modal.renameChannel = 'open';
+    });
   };
   const handleHideRenaming = () => {
     setShowModalRename(false);
-    auth.closeModal();
+    auth.updateModals(modal => {
+      modal.renameChannel = 'close';
+    });
   };
   const handleShowRemoving = () => {
     setShowModalRemove(true);
-    auth.openModal();
+    auth.updateModals(modal => {
+      modal.removeChannel = 'open';
+    });
   };
   const handleHideRemoving = () => {
     setShowModalRemove(false);
-    auth.closeModal();
+    auth.updateModals(modal => {
+      modal.removeChannel = 'close';
+    });
   };
 
   return (

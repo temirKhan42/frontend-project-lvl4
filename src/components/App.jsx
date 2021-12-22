@@ -24,6 +24,7 @@ import {
 } from "../slices/chatSlice.js";
 
 import { ToastContainer, toast } from 'react-toastify';
+import { useImmer } from 'use-immer';
 
 const AuthProvider = ({ socket, children }) => {
   const userId = localStorage.getItem('userId');
@@ -36,10 +37,11 @@ const AuthProvider = ({ socket, children }) => {
     setLoggedIn(false);
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const [modals, updateModals] = useImmer({
+    addChannel: 'close',    // 'close', 'open'
+    removeChannel: 'close',
+    renameChannel: 'close',
+  });
 
   return (
     <authContext.Provider value={{
@@ -47,9 +49,8 @@ const AuthProvider = ({ socket, children }) => {
       logIn,
       logOut,
       socket,
-      isModalOpen,
-      openModal,
-      closeModal,
+      modals,
+      updateModals,
     }}>
       {children}
     </authContext.Provider>
@@ -105,8 +106,6 @@ const PrivateRoute = ({ children, ...rest }) => {
 export default function App({ socket }) {
   const dispatch = useDispatch();
 
-  const auth = useAuth();
-
   const { t } = useTranslation();
   const notifyChannelCreated = () => toast.success(t('notes.channel created'));
   const notifyChannelRenamed = () => toast.success(t('notes.channel renamed'));
@@ -131,10 +130,18 @@ export default function App({ socket }) {
     notifyChannelRenamed();
   });
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const auth = useAuth();
+
+  const modals = Object.entries(auth.modals);
+
+  setIsModalOpen(modals.some(([key, val]) => val === 'open'));
+
   return (
     <AuthProvider socket={socket}>
       <Router>
-        <div className="d-flex flex-column h-100" aria-hidden={auth.isModalOpen}>
+        <div className="d-flex flex-column h-100" aria-hidden={isModalOpen}>
           <Nav />
           <Switch>
             <PrivateRoute exact path="/">
