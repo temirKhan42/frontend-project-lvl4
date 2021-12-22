@@ -89,13 +89,18 @@ const PrivateRoute = () => {
   const auth = useAuth();
   const history = useHistory();
   const location = useLocation();
-  console.log(`Before redirect On Private, location is - ${location}`)
+  console.log(`Before redirect On Private, location is - ${location.pathname}`)
+
   if (!auth.loggedIn) {
-    console.log(`At The Moment Of Redirecting, location is - ${location}`);
+    if (location.pathname === '/login') {
+      return null;
+    }
+    console.log(`At The Moment Of Redirecting, location is - ${location.pathname}`);
     history.push('/login');
     return null;
   }
-  console.log(`Without Redirecting on Private, location is - ${location}`);
+
+  console.log(`Without Redirecting on Private, location is - ${location.pathname}`);
   return <HomePage />;
 };
 
