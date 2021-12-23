@@ -43,44 +43,62 @@ export const fetchChannels = createAsyncThunk(
 );
 
 export const chatSlice = createSlice({
-  name: 'channel',
+  name: 'chat',
   initialState,
   reducers: {
-    setCurrentChannel: (state, action) => {
-      const newState = {...state, currentChannelId: action.payload };
-      return newState;
-    },
-    addChannel: (state, action) => {
-      state.channels.push(action.payload);
-      state.currentChannelId = action.payload.id;
-    },
+    setCurrentChannel: (state, action) => ({
+      ...state,
+      currentChannelId: action.payload,
+    }),
+    addChannel: (state, action) => ({
+      ...state,
+      channels: [...state.channels, action.payload],
+      currentChannelId: action.payload.id,
+    }),
     renameChannel: (state, action) => {
       const newChannel = action.payload;
-      state.channels = state.channels.map((channel) => {
+      const newChannels = state.channels.map((channel) => {
         if (channel.id === newChannel.id) {
           return newChannel;
         }
         return channel;
       });
+
+      return {
+        ...state,
+        channels: newChannels,
+      };
     },
     removeChannel: (state, action) => {
       const removingId = action.payload;
-      if (removingId === state.currentChannelId) {
-        state.currentChannelId = defaultChannelId;
-      }
-      state.channels = state.channels.filter(({ id }) => id !== removingId);
-      state.messages = state.messages.filter(({ channelId }) => channelId !== removingId);
+
+      const currentChannelId = removingId === state.currentChannelId
+        ? defaultChannelId
+        : state.currentChannelId;
+
+      const newChannels = state.channels
+        .filter(({ id }) => id !== removingId);
+
+      const newMessages = state.messages
+        .filter(({ channelId }) => channelId !== removingId);
+
+      return {
+        channels: newChannels,
+        messages: newMessages,
+        currentChannelId,
+      };
     },
-    addMessage: (state, action) => {
-      state.messages.push(action.payload);
-    },
+    addMessage: (state, action) => ({
+      ...state,
+      messages: [...state.messages, action.payload],
+    }),
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchChannels.fulfilled, (state, action) => {
-      state.channels = action.payload.channels;
-      state.currentChannelId = action.payload.currentChannelId;
-      state.messages = action.payload.messages;
-    });
+    builder.addCase(fetchChannels.fulfilled, (state, action) => ({
+      channels: action.payload.channels,
+      currentChannelId: action.payload.currentChannelId,
+      messages: action.payload.messages,
+    }));
   },
 });
 
