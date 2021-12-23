@@ -20,7 +20,6 @@ async function fetchData(token) {
     if (err.response.status === 500) {
       notify();
     }
-    return {};
   }
 }
 
