@@ -95,6 +95,7 @@ const PrivateRoute = () => {
   if (!auth.loggedIn) {
     console.log(`At The Moment Of Redirecting, location is - ${location.pathname}`);
     history.push('/login');
+    console.log(`Between returning null and redirecting /login, location - ${locatioon}`);
     return null;
   }
 
