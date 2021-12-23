@@ -156,7 +156,7 @@ const ChannelList = () => {
 
   useEffect(() => {
     dispatch(fetchChannels());
-  });
+  }, []);
 
   return (
     <ul className="nav flex-column nav-pills nav-fill px-2">

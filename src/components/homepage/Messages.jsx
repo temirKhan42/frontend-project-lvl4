@@ -25,8 +25,7 @@ const MessageBox = () => {
         }) => (
           <div key={`${channelId}-${id}`} className="text-break mb-2">
             <b>{username}</b>
-            :
-            {text}
+            {`: ${text}`}
           </div>
         ))}
       <div ref={divRef} />
@@ -132,8 +131,7 @@ const Messages = () => {
 
   const messageNum = messages.reduce((i, { channelId }) => {
     if (channelId === currentChannelId) {
-      const result = i + 1;
-      return result;
+      return i + 1;
     }
     return i;
   }, 0);
