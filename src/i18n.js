@@ -14,7 +14,7 @@ i18nextInstance
     },
     resources: {
       ru,
-    }
+    },
   });
 
 export default i18nextInstance;

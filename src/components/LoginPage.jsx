@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import routes from '../routes.js';
-import useAuth from "../hooks/index.jsx";
+import useAuth from '../hooks/index.jsx';
 // import loginImage from "../../assets/login-image.js";
 //  import { useRollbar } from '@rollbar/react';
 
@@ -38,7 +38,7 @@ const LoginForm = () => {
         setAuthFailed(false);
         localStorage.setItem('userId', JSON.stringify(data));
         auth.logIn();
-        history.push('/')
+        history.push('/');
       } catch (err) {
         if (option.username === '' && option.password === '') {
           return;
@@ -120,7 +120,7 @@ const CardBody = ({ children }) => {
       {children}
     </div>
   );
-}
+};
 
 const Footer = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'loginPage' });
@@ -141,21 +141,19 @@ const Footer = () => {
   );
 };
 
-const LoginPage = () => {
-  return (
-    <div className="container-fluid h-100">
-      <div className="row justify-content-center align-content-center h-100">
-        <div className="col-12 col-md-8 col-xxl-6">
-          <div className="card shadow-sm">
-            <CardBody>
-              <LoginForm />
-            </CardBody>
-            <Footer />
-          </div>
+const LoginPage = () => (
+  <div className="container-fluid h-100">
+    <div className="row justify-content-center align-content-center h-100">
+      <div className="col-12 col-md-8 col-xxl-6">
+        <div className="card shadow-sm">
+          <CardBody>
+            <LoginForm />
+          </CardBody>
+          <Footer />
         </div>
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 export default LoginPage;

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setCurrentChannel, fetchChannels } from '../../slices/chatSlice.js';
 import classNames from 'classnames';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { setCurrentChannel, fetchChannels } from '../../slices/chatSlice.js';
 import ChannelModal from '../modals/ChannelModal.jsx';
 import useAuth from '../../hooks/index.jsx';
 
@@ -16,13 +16,13 @@ const AddChannel = () => {
 
   const handleShow = () => {
     setShowAddChannel(true);
-    auth.updateModals(modal => {
+    auth.updateModals((modal) => {
       modal.addChannel = 'open';
     });
   };
   const handleHide = () => {
     setShowAddChannel(false);
-    auth.updateModals(modal => {
+    auth.updateModals((modal) => {
       modal.addChannel = 'close';
     });
   };
@@ -33,8 +33,8 @@ const AddChannel = () => {
         <span>{t('channel list')}</span>
         <button onClick={handleShow} type="button" className="p-0 text-primary btn btn-group-vertical">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
-            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
-            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
           </svg>
           <span className="visually-hidden">+</span>
         </button>
@@ -45,7 +45,9 @@ const AddChannel = () => {
   );
 };
 
-const RemovableChannel = ({ name, id, btnClasses, btnSecondary }) => {
+const RemovableChannel = ({
+  name, id, btnClasses, btnSecondary,
+}) => {
   const { t } = useTranslation('translation', { keyPrefix: 'homePage' });
 
   const auth = useAuth();
@@ -63,25 +65,25 @@ const RemovableChannel = ({ name, id, btnClasses, btnSecondary }) => {
 
   const handleShowRenaming = () => {
     setShowModalRename(true);
-    auth.updateModals(modal => {
+    auth.updateModals((modal) => {
       modal.renameChannel = 'open';
     });
   };
   const handleHideRenaming = () => {
     setShowModalRename(false);
-    auth.updateModals(modal => {
+    auth.updateModals((modal) => {
       modal.renameChannel = 'close';
     });
   };
   const handleShowRemoving = () => {
     setShowModalRemove(true);
-    auth.updateModals(modal => {
+    auth.updateModals((modal) => {
       modal.removeChannel = 'open';
     });
   };
   const handleHideRemoving = () => {
     setShowModalRemove(false);
-    auth.updateModals(modal => {
+    auth.updateModals((modal) => {
       modal.removeChannel = 'close';
     });
   };
@@ -146,7 +148,7 @@ const UnremovableChannel = ({ name, id, btnClasses }) => {
       </button>
     </li>
   );
-}
+};
 
 const ChannelList = () => {
   const { channels, currentChannelId } = useSelector((state) => state.channel);
@@ -165,20 +167,24 @@ const ChannelList = () => {
           ...btnSecondary,
         });
 
-        return (removable ?
-          <RemovableChannel
-            key={`${id}-${name}`}
-            name={name}
-            id={id}
-            btnClasses={btnClasses}
-            btnSecondary={btnSecondary}
-          /> :
-          <UnremovableChannel
-            key={`${id}-${name}`}
-            name={name}
-            id={id}
-            btnClasses={btnClasses}
-          />
+        return (removable
+          ? (
+            <RemovableChannel
+              key={`${id}-${name}`}
+              name={name}
+              id={id}
+              btnClasses={btnClasses}
+              btnSecondary={btnSecondary}
+            />
+          )
+          : (
+            <UnremovableChannel
+              key={`${id}-${name}`}
+              name={name}
+              id={id}
+              btnClasses={btnClasses}
+            />
+          )
         );
       })}
     </ul>

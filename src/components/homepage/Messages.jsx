@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { Form, InputGroup, ButtonGroup } from 'react-bootstrap';
 import * as Yup from 'yup';
-import useAuth from '../../hooks/index.jsx';
 import filter from 'leo-profanity';
+import useAuth from '../../hooks/index.jsx';
 
 const MessageBox = () => {
   const divRef = useRef(null);
@@ -20,12 +20,15 @@ const MessageBox = () => {
     <div id="messages-box" className="chat-messages overflow-auto px-5">
       {messages
         .filter(({ channelId }) => channelId === currentChannelId)
-        .map(({ channelId, id, username, text }) => (
+        .map(({
+          channelId, id, username, text,
+        }) => (
           <div key={`${channelId}-${id}`} className="text-break mb-2">
-            <b>{username}</b>: {text}
+            <b>{username}</b>
+            :
+            {text}
           </div>
-        ))
-      }
+        ))}
       <div ref={divRef} />
     </div>
   );
@@ -139,7 +142,10 @@ const Messages = () => {
       <div className="d-flex flex-column h-100">
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0">
-            <b># {channelName}</b>
+            <b>
+              #
+              {channelName}
+            </b>
           </p>
           <span className="text-muted">
             {t('key', { count: messageNum })}

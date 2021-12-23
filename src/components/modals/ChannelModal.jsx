@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
-import useAuth from '../../hooks/index.jsx';
 import _ from 'lodash';
+import useAuth from '../../hooks/index.jsx';
 
 const AddingForm = ({ handleHide }) => {
   const { t } = useTranslation();
@@ -60,7 +60,7 @@ const AddingForm = ({ handleHide }) => {
               isInvalid={!!errors.name}
               ref={inputRef}
               disabled={isSubmitting}
-            ></Form.Control>
+            />
             <Form.Control.Feedback type="invalid">
               {errors.name}
             </Form.Control.Feedback>
@@ -110,7 +110,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
         handleHide();
         auth.socket.emit('renameChannel', {
           id: channelId,
-          ...values
+          ...values,
         }, (res) => console.log(res));
       }}
     >
@@ -136,7 +136,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
               isInvalid={!!errors.name}
               ref={inputRef}
               disabled={isSubmitting}
-            ></Form.Control>
+            />
             <Form.Control.Feedback type="invalid">
               {errors.name}
             </Form.Control.Feedback>
@@ -181,7 +181,7 @@ const RemovingForm = ({ handleHide, channelId }) => {
 };
 
 const getModal = (modalName, handleHide, channelId) => {
-  const { t } = useTranslation('translation', { keyPrefix: 'homePage.modals' })
+  const { t } = useTranslation('translation', { keyPrefix: 'homePage.modals' });
   switch (modalName) {
     case 'add':
       return {
@@ -191,7 +191,7 @@ const getModal = (modalName, handleHide, channelId) => {
     case 'rename':
       return {
         title: t('rename channel header'),
-        modal: <RenamingForm handleHide={handleHide} channelId={channelId} />
+        modal: <RenamingForm handleHide={handleHide} channelId={channelId} />,
       };
     case 'remove':
       return {
@@ -203,7 +203,9 @@ const getModal = (modalName, handleHide, channelId) => {
   }
 };
 
-const ChannelModal = ({ channelId, modalName, showModal, handleHide }) => {
+const ChannelModal = ({
+  channelId, modalName, showModal, handleHide,
+}) => {
   const { title, modal } = getModal(modalName, handleHide, channelId);
 
   return (

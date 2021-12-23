@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import axios from 'axios';
-import routes from '../routes.js';
 import { toast } from 'react-toastify';
+import routes from '../routes.js';
 
 const notify = () => toast.error('Ошибка соединения');
 
@@ -27,9 +27,9 @@ const fetchData = async (token) => {
 const defaultChannelId = 1;
 
 const initialState = {
-  channels: [],         // [{ id: 1, name: '', removable: true }, {}, {}]
+  channels: [], // [{ id: 1, name: '', removable: true }, {}, {}]
   currentChannelId: 1,
-  messages: [],         // [{ channelId: 1, id: 1, userName: '', body: '' }, {}, {}]
+  messages: [], // [{ channelId: 1, id: 1, userName: '', body: '' }, {}, {}]
 };
 
 export const fetchChannels = createAsyncThunk(
@@ -39,8 +39,8 @@ export const fetchChannels = createAsyncThunk(
     const { token } = JSON.parse(userId);
     const response = await fetchData(token);
     return response.data;
-  }
-)
+  },
+);
 
 export const chatSlice = createSlice({
   name: 'channel',
@@ -80,13 +80,13 @@ export const chatSlice = createSlice({
       state.currentChannelId = action.payload.currentChannelId;
       state.messages = action.payload.messages;
     });
-  }
+  },
 });
 
-export const { 
-  setCurrentChannel, 
-  addChannel, 
-  renameChannel, 
+export const {
+  setCurrentChannel,
+  addChannel,
+  renameChannel,
   removeChannel,
   addMessage,
 } = chatSlice.actions;

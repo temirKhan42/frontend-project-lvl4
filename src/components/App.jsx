@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,7 +7,10 @@ import {
   Redirect,
   useLocation,
   useHistory,
-} from "react-router-dom";
+} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import { useImmer } from 'use-immer';
 import authContext from '../context/index.jsx';
 import useAuth from '../hooks/index.jsx';
 
@@ -16,16 +19,12 @@ import HomePage from './homepage/HomePage.jsx';
 import ErrorPage from './ErrorPage.jsx';
 import SignupPage from './SignupPage.jsx';
 
-import { useDispatch } from "react-redux";
 import {
   addChannel,
   removeChannel,
   renameChannel,
   addMessage,
-} from "../slices/chatSlice.js";
-
-import { ToastContainer, toast } from 'react-toastify';
-import { useImmer } from 'use-immer';
+} from '../slices/chatSlice.js';
 
 const AuthProvider = ({ socket, children }) => {
   const userId = localStorage.getItem('userId');
@@ -39,7 +38,7 @@ const AuthProvider = ({ socket, children }) => {
   };
 
   const [modals, updateModals] = useImmer({
-    addChannel: 'close',    // 'close', 'open'
+    addChannel: 'close', // 'close', 'open'
     removeChannel: 'close',
     renameChannel: 'close',
   });
@@ -52,7 +51,8 @@ const AuthProvider = ({ socket, children }) => {
       socket,
       modals,
       updateModals,
-    }}>
+    }}
+    >
       {children}
     </authContext.Provider>
   );
@@ -90,11 +90,11 @@ const PrivateRoute = () => {
   const auth = useAuth();
   const history = useHistory();
   const location = useLocation();
-  console.log(`Before redirect On Private, location is - ${location.pathname}`)
+  console.log(`Before redirect On Private, location is - ${location.pathname}`);
 
   if (!auth.loggedIn) {
     console.log(`At The Moment Of Redirecting, location is - ${location.pathname}`);
-    return <Redirect to='/login' />;
+    return <Redirect to="/login" />;
   }
 
   console.log(`Without Redirecting on Private, location is - ${location.pathname}`);

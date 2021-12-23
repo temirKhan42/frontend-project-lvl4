@@ -10,7 +10,7 @@ export default {
       'submit button': 'Войти',
       'image alt': 'Войти',
       'acaunt question': 'Нет акаунта?',
-      'signup': 'Регистрация',
+      signup: 'Регистрация',
     },
     signupPage: {
       'form header': 'Регистрация',
@@ -23,7 +23,7 @@ export default {
     'error messages': {
       'authorization failed': 'Неверные имя пользователя или пароль',
       'symbols ammount': 'От 3 до 20 символов',
-      'required': 'Обязательное поле',
+      required: 'Обязательное поле',
       'password symbols ammount': 'Не менее 6 символов',
       'confirm password': 'Пароли должны совпадать',
       'user exist': 'Такой пользователь уже существует',
@@ -44,7 +44,7 @@ export default {
         key_many: '{{count}} сообщений',
         key_other: '{{count}} сообщений',
       },
-      'modals': {
+      modals: {
         'add channel header': 'Добавить канал',
         'remove channel header': 'Удалить канал',
         'rename channel header': 'Переименовать канал',
@@ -55,7 +55,7 @@ export default {
         'remove channel button': 'Удалить',
       },
     },
-    'notes': {
+    notes: {
       'channel created': 'Канал создан',
       'channel renamed': 'Канал переименован',
       'channel removed': 'Канал удалён',
