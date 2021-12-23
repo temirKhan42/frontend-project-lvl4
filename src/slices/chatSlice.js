@@ -34,7 +34,7 @@ const initialState = {
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchStatus',
-  async () => {
+  async (thunkAPI) => {
     const userId = localStorage.getItem('userId');
     const { token } = JSON.parse(userId);
     const response = await fetchData(token);
