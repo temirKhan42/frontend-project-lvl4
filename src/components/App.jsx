@@ -88,7 +88,6 @@ const Nav = () => {
 
 const PrivateRoute = () => {
   const auth = useAuth();
-  const history = useHistory();
   const location = useLocation();
   console.log(`Before redirect On Private, location is - ${location.pathname}`);
 

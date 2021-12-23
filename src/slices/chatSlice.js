@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import routes from '../routes.js';
 
 const notify = () => toast.error('Ошибка соединения');
 
-const fetchData = async (token) => {
+async function fetchData(token) {
   try {
     const response = await axios({
       method: 'get',
@@ -21,8 +20,9 @@ const fetchData = async (token) => {
     if (err.response.status === 500) {
       notify();
     }
+    return {};
   }
-};
+}
 
 const defaultChannelId = 1;
 
@@ -34,7 +34,7 @@ const initialState = {
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchStatus',
-  async (thunkAPI) => {
+  async () => {
     const userId = localStorage.getItem('userId');
     const { token } = JSON.parse(userId);
     const response = await fetchData(token);

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import App from './components/App.jsx';
 import store from './store/index.js';
 import './i18n.js';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 const StartApp = ({ socket }) => {
   const rollbarConfig = {

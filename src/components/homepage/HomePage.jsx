@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 import useAuth from '../../hooks/index.jsx';
@@ -6,9 +6,9 @@ import useAuth from '../../hooks/index.jsx';
 const HomePage = () => {
   const auth = useAuth();
 
-  const modals = Object.entries(auth.modals);
+  const modalStates = Object.values(auth.modals);
 
-  const isModalOpen = modals.some(([key, val]) => val === 'open');
+  const isModalOpen = modalStates.some((state) => state === 'open');
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">

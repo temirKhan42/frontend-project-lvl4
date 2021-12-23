@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
-import _ from 'lodash';
 import useAuth from '../../hooks/index.jsx';
 
 const AddingForm = ({ handleHide }) => {
@@ -91,7 +90,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
     inputRef.current.select();
   }, []);
 
-  const [{ name }] = channels.filter(({ id }) => id === channelId);
+  const [{ name: channelName }] = channels.filter(({ id }) => id === channelId);
 
   const channelsNames = channels.map(({ name }) => name);
   const schema = Yup.object().shape({
@@ -104,7 +103,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
 
   return (
     <Formik
-      initialValues={{ name }}
+      initialValues={{ name: channelName }}
       validationSchema={schema}
       onSubmit={(values) => {
         handleHide();
@@ -180,8 +179,7 @@ const RemovingForm = ({ handleHide, channelId }) => {
   );
 };
 
-const getModal = (modalName, handleHide, channelId) => {
-  const { t } = useTranslation('translation', { keyPrefix: 'homePage.modals' });
+const getModal = (modalName, handleHide, channelId, t) => {
   switch (modalName) {
     case 'add':
       return {
@@ -206,7 +204,9 @@ const getModal = (modalName, handleHide, channelId) => {
 const ChannelModal = ({
   channelId, modalName, showModal, handleHide,
 }) => {
-  const { title, modal } = getModal(modalName, handleHide, channelId);
+  const { t } = useTranslation('translation', { keyPrefix: 'homePage.modals' });
+
+  const { title, modal } = getModal(modalName, handleHide, channelId, t);
 
   return (
     <Modal centered show={showModal} onHide={handleHide}>
