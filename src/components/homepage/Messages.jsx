@@ -132,7 +132,8 @@ const Messages = () => {
 
   const messageNum = messages.reduce((i, { channelId }) => {
     if (channelId === currentChannelId) {
-      return i + 1;
+      const result = i + 1;
+      return result;
     }
     return i;
   }, 0);
