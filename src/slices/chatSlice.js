@@ -20,6 +20,7 @@ async function fetchData(token) {
     if (err.response.status === 500) {
       notify();
     }
+    throw err;
   }
 }
 
@@ -33,7 +34,7 @@ const initialState = {
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchStatus',
-  async (thunkAPI) => {
+  async () => {
     const userId = localStorage.getItem('userId');
     const { token } = JSON.parse(userId);
     const response = await fetchData(token);
