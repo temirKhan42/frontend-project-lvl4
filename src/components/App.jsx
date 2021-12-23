@@ -62,8 +62,9 @@ const Nav = () => {
   const { t } = useTranslation();
   const auth = useAuth();
   const history = useHistory();
+  const location = useLocation();
   const handleClick = () => {
-    console.log('App Nav Handle Click On Link');
+    console.log(`App Nav Handle Click On Link location is - ${location.pathname}`);
     history.push('/');
   };
 
@@ -92,9 +93,6 @@ const PrivateRoute = () => {
   console.log(`Before redirect On Private, location is - ${location.pathname}`)
 
   if (!auth.loggedIn) {
-    if (location.pathname === '/login') {
-      return null;
-    }
     console.log(`At The Moment Of Redirecting, location is - ${location.pathname}`);
     history.push('/login');
     return null;
