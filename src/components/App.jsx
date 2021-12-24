@@ -53,6 +53,7 @@ const Nav = () => {
   const location = useLocation();
   const handleClick = () => {
     if (location.pathname === '/') {
+      console.log('Clicking on Hexlet Chat in location - "/"');
       return;
     }
     console.log(`App Nav Handle Click On Link location is - ${location.pathname}`);
