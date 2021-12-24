@@ -63,7 +63,9 @@ const Nav = () => {
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
-        <a className="navbar-brand" href="/" onClick={handleClick}>Hexlet Chat</a>
+        <button className="navbar-brand" type="button" onClick={handleClick}>
+          Hexlet Chat
+        </button>
         {auth.loggedIn ? (
           <button
             type="button"
