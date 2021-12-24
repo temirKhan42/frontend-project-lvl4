@@ -52,6 +52,9 @@ const Nav = () => {
   const history = useHistory();
   const location = useLocation();
   const handleClick = () => {
+    if (location.pathname === '/') {
+      return;
+    }
     console.log(`App Nav Handle Click On Link location is - ${location.pathname}`);
     history.push('/');
   };
