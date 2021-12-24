@@ -8,7 +8,7 @@ import {
   useLocation,
   useHistory,
 } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import authContext from '../context/index.jsx';
 import useAuth from '../hooks/index.jsx';
@@ -115,12 +115,10 @@ export default function App({ socket }) {
     notifyChannelRenamed();
   });
 
-  const isAnyModalOpen = useSelector((state) => state.ui.isAnyModalOpen);
-
   return (
     <AuthProvider socket={socket}>
       <Router>
-        <div className="d-flex flex-column h-100" aria-hidden={isAnyModalOpen}>
+        <div className="d-flex flex-column h-100">
           <Nav />
           <Switch>
             <Route exact path="/">
