@@ -51,7 +51,8 @@ const Nav = () => {
   const auth = useAuth();
   const history = useHistory();
   const location = useLocation();
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     if (location.pathname === '/') {
       return;
     }
@@ -62,9 +63,9 @@ const Nav = () => {
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
-        <button className="navbar-brand" type="button" onClick={handleClick}>
+        <a href="/" className="navbar-brand" onClick={handleClick}>
           Hexlet Chat
-        </button>
+        </a>
         {auth.loggedIn ? (
           <button
             type="button"

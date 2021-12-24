@@ -126,7 +126,8 @@ const Footer = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'loginPage' });
 
   const history = useHistory();
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     history.push('/signup');
   };
 
