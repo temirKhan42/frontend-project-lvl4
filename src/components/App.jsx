@@ -10,7 +10,6 @@ import {
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import { useImmer } from 'use-immer';
 import authContext from '../context/index.jsx';
 import useAuth from '../hooks/index.jsx';
 
@@ -37,20 +36,9 @@ const AuthProvider = ({ socket, children }) => {
     setLoggedIn(false);
   };
 
-  const [modals, updateModals] = useImmer({
-    addChannel: 'close', // 'close', 'open'
-    removeChannel: 'close',
-    renameChannel: 'close',
-  });
-
   return (
     <authContext.Provider value={{
-      loggedIn,
-      logIn,
-      logOut,
-      socket,
-      modals,
-      updateModals,
+      loggedIn, logIn, logOut, socket,
     }}
     >
       {children}
