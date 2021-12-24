@@ -8,7 +8,7 @@ import {
   useLocation,
   useHistory,
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import authContext from '../context/index.jsx';
 import useAuth from '../hooks/index.jsx';
@@ -53,10 +53,9 @@ const Nav = () => {
   const location = useLocation();
   const handleClick = () => {
     if (location.pathname === '/') {
-      console.log('Clicking on Hexlet Chat in location - "/"');
       return;
     }
-    console.log(`App Nav Handle Click On Link location is - ${location.pathname}`);
+
     history.push('/');
   };
 
@@ -82,15 +81,10 @@ const Nav = () => {
 
 const PrivateRoute = () => {
   const auth = useAuth();
-  const location = useLocation();
-  console.log(`Before redirect On Private, location is - ${location.pathname}`);
-
   if (!auth.loggedIn) {
-    console.log(`At The Moment Of Redirecting, location is - ${location.pathname}`);
     return <Redirect to="/login" />;
   }
 
-  console.log(`Without Redirecting on Private, location is - ${location.pathname}`);
   return <HomePage />;
 };
 
@@ -121,10 +115,12 @@ export default function App({ socket }) {
     notifyChannelRenamed();
   });
 
+  const isAnyModalOpen = useSelector((state) => state.ui.isAnyModalOpen);
+
   return (
     <AuthProvider socket={socket}>
       <Router>
-        <div className="d-flex flex-column h-100">
+        <div className="d-flex flex-column h-100" aria-hidden={isAnyModalOpen}>
           <Nav />
           <Switch>
             <Route exact path="/">
