@@ -11,7 +11,7 @@ const AddingForm = ({ handleHide }) => {
 
   const auth = useAuth();
 
-  const channels = useSelector((state) => state.channel.channels);
+  const channels = useSelector((state) => state.chat.channels);
 
   const inputRef = useRef();
   useEffect(() => {
@@ -83,7 +83,7 @@ const RenamingForm = ({ handleHide, channelId }) => {
 
   const auth = useAuth();
 
-  const channels = useSelector((state) => state.channel.channels);
+  const channels = useSelector((state) => state.chat.channels);
 
   const inputRef = useRef();
   useEffect(() => {
@@ -181,17 +181,17 @@ const RemovingForm = ({ handleHide, channelId }) => {
 
 const getModal = (modalName, handleHide, channelId, t) => {
   switch (modalName) {
-    case 'add':
+    case 'addChannel':
       return {
         title: t('add channel header'),
         modal: <AddingForm handleHide={handleHide} />,
       };
-    case 'rename':
+    case 'renameChannel':
       return {
         title: t('rename channel header'),
         modal: <RenamingForm handleHide={handleHide} channelId={channelId} />,
       };
-    case 'remove':
+    case 'removeChannel':
       return {
         title: t('remove channel header'),
         modal: <RemovingForm handleHide={handleHide} channelId={channelId} />,

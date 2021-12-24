@@ -4,35 +4,43 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { setCurrentChannel, fetchChannels } from '../../slices/chatSlice.js';
+import { openModal, closeModal } from '../../slices/uiSlice.js';
 import ChannelModal from '../modals/ChannelModal.jsx';
-import useAuth from '../../hooks/index.jsx';
 
 const AddChannel = () => {
-  const auth = useAuth();
-
   const { t } = useTranslation('translation', { keyPrefix: 'homePage' });
+
+  const dispatch = useDispatch();
 
   const [showAddChannel, setShowAddChannel] = useState(false);
 
-  const handleShow = () => {
+  const modalName = 'addChannel';
+
+  const handleShowAdding = () => {
     setShowAddChannel(true);
-    auth.updateModals((modal) => {
-      modal.addChannel = 'open';
-    });
+    dispatch(openModal(modalName));
   };
-  const handleHide = () => {
+  const handleHideAdding = () => {
     setShowAddChannel(false);
-    auth.updateModals((modal) => {
-      modal.addChannel = 'close';
-    });
+    dispatch(closeModal(modalName));
   };
 
   return (
     <>
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
         <span>{t('channel list')}</span>
-        <button onClick={handleShow} type="button" className="p-0 text-primary btn btn-group-vertical">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
+        <button
+          onClick={handleShowAdding}
+          type="button"
+          className="p-0 text-primary btn btn-group-vertical"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            width="20"
+            height="20"
+            fill="currentColor"
+          >
             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
           </svg>
@@ -40,7 +48,11 @@ const AddChannel = () => {
         </button>
       </div>
 
-      <ChannelModal modalName="add" showModal={showAddChannel} handleHide={handleHide} />
+      <ChannelModal
+        modalName={modalName}
+        showModal={showAddChannel}
+        handleHide={handleHideAdding}
+      />
     </>
   );
 };
@@ -50,12 +62,11 @@ const RemovableChannel = ({
 }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'homePage' });
 
-  const auth = useAuth();
+  const dispatch = useDispatch();
 
   const drpdnBtnClss = 'flex-grow-0 dropdown-toggle dropdown-toggle-split btn';
   const dropdownBtnClasses = classNames(drpdnBtnClss, { ...btnSecondary });
 
-  const dispatch = useDispatch();
   const handleBtnClick = () => {
     dispatch(setCurrentChannel(id));
   };
@@ -63,29 +74,24 @@ const RemovableChannel = ({
   const [showModalRename, setShowModalRename] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
 
+  const renameModalName = 'renameChannel';
+  const removeModalName = 'removeChannel';
+
   const handleShowRenaming = () => {
     setShowModalRename(true);
-    auth.updateModals((modal) => {
-      modal.renameChannel = 'open';
-    });
+    dispatch(openModal(renameModalName));
   };
   const handleHideRenaming = () => {
     setShowModalRename(false);
-    auth.updateModals((modal) => {
-      modal.renameChannel = 'close';
-    });
+    dispatch(closeModal(renameModalName));
   };
   const handleShowRemoving = () => {
     setShowModalRemove(true);
-    auth.updateModals((modal) => {
-      modal.removeChannel = 'open';
-    });
+    dispatch(openModal(removeModalName));
   };
   const handleHideRemoving = () => {
     setShowModalRemove(false);
-    auth.updateModals((modal) => {
-      modal.removeChannel = 'close';
-    });
+    dispatch(closeModal(removeModalName));
   };
 
   return (
@@ -118,13 +124,13 @@ const RemovableChannel = ({
       </li>
 
       <ChannelModal
-        modalName="rename"
+        modalName={renameModalName}
         showModal={showModalRename}
         handleHide={handleHideRenaming}
         channelId={id}
       />
       <ChannelModal
-        modalName="remove"
+        modalName={removeModalName}
         showModal={showModalRemove}
         handleHide={handleHideRemoving}
         channelId={id}
@@ -135,6 +141,7 @@ const RemovableChannel = ({
 
 const UnremovableChannel = ({ name, id, btnClasses }) => {
   const dispatch = useDispatch();
+
   const handleClick = (e) => {
     e.preventDefault();
     dispatch(setCurrentChannel(id));
@@ -151,7 +158,7 @@ const UnremovableChannel = ({ name, id, btnClasses }) => {
 };
 
 const ChannelList = () => {
-  const { channels, currentChannelId } = useSelector((state) => state.channel);
+  const { channels, currentChannelId } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
 
   useEffect(() => {

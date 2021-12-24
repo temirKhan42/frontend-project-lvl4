@@ -14,7 +14,7 @@ const MessageBox = () => {
     divRef.current.scrollIntoView({ behavior: 'smooth' });
   });
 
-  const { currentChannelId, messages } = useSelector((state) => state.channel);
+  const { currentChannelId, messages } = useSelector((state) => state.chat);
 
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5">
@@ -47,7 +47,7 @@ const filterObsceneText = ({ text }) => ({ text: ruFilter(enFilter(text)) });
 
 const MessageForm = () => {
   const { t } = useTranslation();
-  const { currentChannelId } = useSelector((state) => state.channel);
+  const { currentChannelId } = useSelector((state) => state.chat);
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
@@ -123,7 +123,7 @@ const MessageForm = () => {
 
 const Messages = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'homePage.message count' });
-  const { channels, currentChannelId, messages } = useSelector((state) => state.channel);
+  const { channels, currentChannelId, messages } = useSelector((state) => state.chat);
 
   const [{ name: channelName }] = channels.length === 0
     ? [{ name: '' }]

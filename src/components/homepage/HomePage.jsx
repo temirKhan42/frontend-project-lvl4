@@ -1,18 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
-import useAuth from '../../hooks/index.jsx';
 
 const HomePage = () => {
-  const auth = useAuth();
-
-  const modalStates = Object.values(auth.modals);
-
-  const isModalOpen = modalStates.some((state) => state === 'open');
+  const isAnyModalOpen = useSelector((state) => state.ui.isAnyModalOpen);
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
-      <div className="row h-100 bg-white flex-md-row" aria-hidden={isModalOpen}>
+      <div className="row h-100 bg-white flex-md-row" aria-hidden={isAnyModalOpen}>
         <Channels />
         <Messages />
       </div>
