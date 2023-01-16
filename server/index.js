@@ -1,14 +1,13 @@
 // @ts-check
-
-import Pug from 'pug';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fastify from 'fastify';
+import Fastify from 'fastify';
 import pointOfView from 'point-of-view';
 import fastifySocketIo from 'fastify-socket.io';
 import fastifyStatic from 'fastify-static';
 import fastifyJWT from 'fastify-jwt';
 import HttpErrors from 'http-errors';
+import Pug from 'pug';
 
 import addRoutes from './routes.js';
 
@@ -60,7 +59,7 @@ const setUpAuth = (app) => {
 };
 
 export default async (options) => {
-  const app = fastify({ logger: { prettyPrint: true } });
+  const app = Fastify({ logger: { prettyPrint: true } });
 
   setUpAuth(app);
   setUpViews(app);
