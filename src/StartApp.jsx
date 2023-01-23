@@ -6,6 +6,8 @@ import store from './store/index.js';
 import './i18n.js';
 
 const StartApp = ({ socket }) => {
+  console.log('starting app');
+  
   const rollbarConfig = {
     accessToken: 'cf96e5d807e5492fb9377e245ab7ebc3', // 'POST_CLIENT_ITEM_ACCESS_TOKEN'
     captureUncaught: true,
